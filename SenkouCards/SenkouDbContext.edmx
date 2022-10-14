@@ -1,0 +1,494 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SenkoucardsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="attempts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="deckId" Type="int" Nullable="false" />
+          <Property Name="score" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="attemptDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cards">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="front" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="back" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="points" Type="int" Nullable="false" />
+          <Property Name="deckId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cardsAudios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="cardId" Type="int" Nullable="false" />
+          <Property Name="audio" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="cardsImages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="cardId" Type="int" Nullable="false" />
+          <Property Name="image" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="decks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" Nullable="false" />
+          <Property Name="isOfficial" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="responses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="attemptId" Type="int" Nullable="false" />
+          <Property Name="cardId" Type="int" Nullable="false" />
+          <Property Name="isCorrectResponse" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="score" Type="decimal" Precision="17" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_attempts_decks">
+          <End Role="decks" Type="Self.decks" Multiplicity="1" />
+          <End Role="attempts" Type="Self.attempts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="decks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="attempts">
+              <PropertyRef Name="deckId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_attempts_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="attempts" Type="Self.attempts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="attempts">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cards_decks">
+          <End Role="decks" Type="Self.decks" Multiplicity="1" />
+          <End Role="cards" Type="Self.cards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="decks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cards">
+              <PropertyRef Name="deckId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cardsAudios_cards">
+          <End Role="cards" Type="Self.cards" Multiplicity="1" />
+          <End Role="cardsAudios" Type="Self.cardsAudios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cards">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cardsAudios">
+              <PropertyRef Name="cardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cardsImages_cards">
+          <End Role="cards" Type="Self.cards" Multiplicity="1" />
+          <End Role="cardsImages" Type="Self.cardsImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cards">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cardsImages">
+              <PropertyRef Name="cardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_responses_attempts">
+          <End Role="attempts" Type="Self.attempts" Multiplicity="1" />
+          <End Role="responses" Type="Self.responses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="attempts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="responses">
+              <PropertyRef Name="attemptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_responses_cards">
+          <End Role="cards" Type="Self.cards" Multiplicity="1" />
+          <End Role="responses" Type="Self.responses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cards">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="responses">
+              <PropertyRef Name="cardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SenkoucardsModelStoreContainer">
+          <EntitySet Name="attempts" EntityType="Self.attempts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cards" EntityType="Self.cards" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cardsAudios" EntityType="Self.cardsAudios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cardsImages" EntityType="Self.cardsImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="decks" EntityType="Self.decks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="responses" EntityType="Self.responses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_attempts_decks" Association="Self.FK_attempts_decks">
+            <End Role="decks" EntitySet="decks" />
+            <End Role="attempts" EntitySet="attempts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_attempts_users" Association="Self.FK_attempts_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="attempts" EntitySet="attempts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cards_decks" Association="Self.FK_cards_decks">
+            <End Role="decks" EntitySet="decks" />
+            <End Role="cards" EntitySet="cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cardsAudios_cards" Association="Self.FK_cardsAudios_cards">
+            <End Role="cards" EntitySet="cards" />
+            <End Role="cardsAudios" EntitySet="cardsAudios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cardsImages_cards" Association="Self.FK_cardsImages_cards">
+            <End Role="cards" EntitySet="cards" />
+            <End Role="cardsImages" EntitySet="cardsImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_responses_attempts" Association="Self.FK_responses_attempts">
+            <End Role="attempts" EntitySet="attempts" />
+            <End Role="responses" EntitySet="responses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_responses_cards" Association="Self.FK_responses_cards">
+            <End Role="cards" EntitySet="cards" />
+            <End Role="responses" EntitySet="responses" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SenkoucardsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="attempts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="deckId" Type="Int32" Nullable="false" />
+          <Property Name="score" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="attemptDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="decks" Relationship="Self.FK_attempts_decks" FromRole="attempts" ToRole="decks" />
+          <NavigationProperty Name="users" Relationship="Self.FK_attempts_users" FromRole="attempts" ToRole="users" />
+          <NavigationProperty Name="responses" Relationship="Self.FK_responses_attempts" FromRole="attempts" ToRole="responses" />
+        </EntityType>
+        <EntityType Name="cards">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="front" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="back" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="points" Type="Int32" Nullable="false" />
+          <Property Name="deckId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="decks" Relationship="Self.FK_cards_decks" FromRole="cards" ToRole="decks" />
+          <NavigationProperty Name="cardsAudios" Relationship="Self.FK_cardsAudios_cards" FromRole="cards" ToRole="cardsAudios" />
+          <NavigationProperty Name="cardsImages" Relationship="Self.FK_cardsImages_cards" FromRole="cards" ToRole="cardsImages" />
+          <NavigationProperty Name="responses" Relationship="Self.FK_responses_cards" FromRole="cards" ToRole="responses" />
+        </EntityType>
+        <EntityType Name="cardsAudios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="cardId" Type="Int32" Nullable="false" />
+          <Property Name="audio" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="cards" Relationship="Self.FK_cardsAudios_cards" FromRole="cardsAudios" ToRole="cards" />
+        </EntityType>
+        <EntityType Name="cardsImages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="cardId" Type="Int32" Nullable="false" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="cards" Relationship="Self.FK_cardsImages_cards" FromRole="cardsImages" ToRole="cards" />
+        </EntityType>
+        <EntityType Name="decks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isOfficial" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="attempts" Relationship="Self.FK_attempts_decks" FromRole="decks" ToRole="attempts" />
+          <NavigationProperty Name="cards" Relationship="Self.FK_cards_decks" FromRole="decks" ToRole="cards" />
+        </EntityType>
+        <EntityType Name="responses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="attemptId" Type="Int32" Nullable="false" />
+          <Property Name="cardId" Type="Int32" Nullable="false" />
+          <Property Name="isCorrectResponse" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="attempts" Relationship="Self.FK_responses_attempts" FromRole="responses" ToRole="attempts" />
+          <NavigationProperty Name="cards" Relationship="Self.FK_responses_cards" FromRole="responses" ToRole="cards" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="score" Type="Decimal" Precision="17" Scale="2" Nullable="false" />
+          <NavigationProperty Name="attempts" Relationship="Self.FK_attempts_users" FromRole="users" ToRole="attempts" />
+        </EntityType>
+        <Association Name="FK_attempts_decks">
+          <End Role="decks" Type="Self.decks" Multiplicity="1" />
+          <End Role="attempts" Type="Self.attempts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="decks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="attempts">
+              <PropertyRef Name="deckId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_attempts_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="attempts" Type="Self.attempts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="attempts">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_responses_attempts">
+          <End Role="attempts" Type="Self.attempts" Multiplicity="1" />
+          <End Role="responses" Type="Self.responses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="attempts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="responses">
+              <PropertyRef Name="attemptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cards_decks">
+          <End Role="decks" Type="Self.decks" Multiplicity="1" />
+          <End Role="cards" Type="Self.cards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="decks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cards">
+              <PropertyRef Name="deckId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cardsAudios_cards">
+          <End Role="cards" Type="Self.cards" Multiplicity="1" />
+          <End Role="cardsAudios" Type="Self.cardsAudios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cards">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cardsAudios">
+              <PropertyRef Name="cardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cardsImages_cards">
+          <End Role="cards" Type="Self.cards" Multiplicity="1" />
+          <End Role="cardsImages" Type="Self.cardsImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cards">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cardsImages">
+              <PropertyRef Name="cardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_responses_cards">
+          <End Role="cards" Type="Self.cards" Multiplicity="1" />
+          <End Role="responses" Type="Self.responses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cards">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="responses">
+              <PropertyRef Name="cardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SenkoucardsConfig" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="attempts" EntityType="Self.attempts" />
+          <EntitySet Name="cards" EntityType="Self.cards" />
+          <EntitySet Name="cardsAudios" EntityType="Self.cardsAudios" />
+          <EntitySet Name="cardsImages" EntityType="Self.cardsImages" />
+          <EntitySet Name="decks" EntityType="Self.decks" />
+          <EntitySet Name="responses" EntityType="Self.responses" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="FK_attempts_decks" Association="Self.FK_attempts_decks">
+            <End Role="decks" EntitySet="decks" />
+            <End Role="attempts" EntitySet="attempts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_attempts_users" Association="Self.FK_attempts_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="attempts" EntitySet="attempts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_responses_attempts" Association="Self.FK_responses_attempts">
+            <End Role="attempts" EntitySet="attempts" />
+            <End Role="responses" EntitySet="responses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cards_decks" Association="Self.FK_cards_decks">
+            <End Role="decks" EntitySet="decks" />
+            <End Role="cards" EntitySet="cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cardsAudios_cards" Association="Self.FK_cardsAudios_cards">
+            <End Role="cards" EntitySet="cards" />
+            <End Role="cardsAudios" EntitySet="cardsAudios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cardsImages_cards" Association="Self.FK_cardsImages_cards">
+            <End Role="cards" EntitySet="cards" />
+            <End Role="cardsImages" EntitySet="cardsImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_responses_cards" Association="Self.FK_responses_cards">
+            <End Role="cards" EntitySet="cards" />
+            <End Role="responses" EntitySet="responses" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SenkoucardsModelStoreContainer" CdmEntityContainer="SenkoucardsConfig">
+          <EntitySetMapping Name="attempts">
+            <EntityTypeMapping TypeName="SenkoucardsModel.attempts">
+              <MappingFragment StoreEntitySet="attempts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="deckId" ColumnName="deckId" />
+                <ScalarProperty Name="score" ColumnName="score" />
+                <ScalarProperty Name="attemptDate" ColumnName="attemptDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cards">
+            <EntityTypeMapping TypeName="SenkoucardsModel.cards">
+              <MappingFragment StoreEntitySet="cards">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="front" ColumnName="front" />
+                <ScalarProperty Name="back" ColumnName="back" />
+                <ScalarProperty Name="points" ColumnName="points" />
+                <ScalarProperty Name="deckId" ColumnName="deckId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cardsAudios">
+            <EntityTypeMapping TypeName="SenkoucardsModel.cardsAudios">
+              <MappingFragment StoreEntitySet="cardsAudios">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cardId" ColumnName="cardId" />
+                <ScalarProperty Name="audio" ColumnName="audio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cardsImages">
+            <EntityTypeMapping TypeName="SenkoucardsModel.cardsImages">
+              <MappingFragment StoreEntitySet="cardsImages">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cardId" ColumnName="cardId" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="decks">
+            <EntityTypeMapping TypeName="SenkoucardsModel.decks">
+              <MappingFragment StoreEntitySet="decks">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="isOfficial" ColumnName="isOfficial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="responses">
+            <EntityTypeMapping TypeName="SenkoucardsModel.responses">
+              <MappingFragment StoreEntitySet="responses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="attemptId" ColumnName="attemptId" />
+                <ScalarProperty Name="cardId" ColumnName="cardId" />
+                <ScalarProperty Name="isCorrectResponse" ColumnName="isCorrectResponse" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="SenkoucardsModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="score" ColumnName="score" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
