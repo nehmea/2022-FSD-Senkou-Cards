@@ -53,8 +53,10 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -64,9 +66,11 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -85,8 +89,14 @@
     <Compile Include="cardsImages.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DeckInfo.xaml.cs">
+      <DependentUpon>DeckInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="decks.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Decks.xaml.cs">
+      <DependentUpon>Decks.xaml</DependentUpon>
     </Compile>
     <Compile Include="responses.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
@@ -109,6 +119,14 @@
     <Compile Include="users.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
+    <Page Include="DeckInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Decks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
