@@ -39,14 +39,14 @@
 
             <!-- By default pressing tab moves focus to the next control. Setting AcceptsTab to true allows the 
            RichTextBox to accept tab characters. -->
-            <RichTextBox x:Name="richTextBox" HorizontalAlignment="Left" Height="85" Margin="80,20,0,0" VerticalAlignment="Top" Width="640" AcceptsTab="True">
+            <RichTextBox DockPanel.Dock="Top" x:Name="richTextBox" Height="85" Margin="80,20,74,0" VerticalAlignment="Top" AcceptsTab="True">
                 <FlowDocument>
                     <Paragraph>
                         <Run Text="RichTextBox"/>
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
-            <RichTextBox x:Name="richTextBox_Copy" HorizontalAlignment="Left" Height="85" Margin="80,192,0,0" VerticalAlignment="Top" Width="640" AcceptsTab="True">
+            <RichTextBox DockPanel.Dock="Top" x:Name="richTextBox_Copy" HorizontalAlignment="Left" Height="85" Margin="80,30,0,0" VerticalAlignment="Top" Width="640" AcceptsTab="True">
                 <FlowDocument>
                     <Paragraph>
                         <Run Text="RichTextBox"/>
@@ -56,7 +56,7 @@
         </DockPanel>
         <Button x:Name="button" Content="Upload Image" HorizontalAlignment="Left" Margin="80,342,0,0" VerticalAlignment="Top" Width="123"/>
         <Button x:Name="button1" Content="Upload Audio" HorizontalAlignment="Left" Margin="80,367,0,0" VerticalAlignment="Top" Width="123"/>
-        
+
         <Label x:Name="label" Content="Back" HorizontalAlignment="Left" Margin="80,136,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label1" Content="Front" HorizontalAlignment="Left" Margin="80,28,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.447,1.269"/>
     </Grid>
