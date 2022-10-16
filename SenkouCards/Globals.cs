@@ -33,5 +33,23 @@ namespace SenkouCards
             }
         }
 
+        private static users _activeUser;
+
+        public static users ActiveUser
+        {
+            set
+            {
+                if (_activeUser == null)
+                {
+                    _activeUser = value;
+                }
+            }
+
+            get
+            {
+                return _activeUser;
+            }
+        }
+
     }
 }
