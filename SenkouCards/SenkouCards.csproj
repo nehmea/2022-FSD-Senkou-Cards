@@ -98,6 +98,10 @@
     <Compile Include="Decks.xaml.cs">
       <DependentUpon>Decks.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Globals.cs" />
+    <Compile Include="Register.xaml.cs">
+      <DependentUpon>Register.xaml</DependentUpon>
+    </Compile>
     <Compile Include="responses.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
@@ -139,6 +143,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Register.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
