@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cd0a23ada0764e5b9029b891d298fb3b" Name="Diagram1">
+        <EntityTypeShape EntityType="SenkoucardsModel.attempts" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SenkoucardsModel.cards" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="SenkoucardsModel.cardsAudios" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SenkoucardsModel.cardsImages" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SenkoucardsModel.decks" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SenkoucardsModel.responses" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SenkoucardsModel.users" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="SenkoucardsModel.FK_attempts_decks" ManuallyRouted="false" />
+        <AssociationConnector Association="SenkoucardsModel.FK_attempts_users" ManuallyRouted="false" />
+        <AssociationConnector Association="SenkoucardsModel.FK_responses_attempts" ManuallyRouted="false" />
+        <AssociationConnector Association="SenkoucardsModel.FK_cards_decks" ManuallyRouted="false" />
+        <AssociationConnector Association="SenkoucardsModel.FK_cardsAudios_cards" ManuallyRouted="false" />
+        <AssociationConnector Association="SenkoucardsModel.FK_cardsImages_cards" ManuallyRouted="false" />
+        <AssociationConnector Association="SenkoucardsModel.FK_responses_cards" ManuallyRouted="false" />
+        <AssociationConnector Association="SenkoucardsModel.FK_decks_users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

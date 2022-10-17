@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="button" Content="Test card creation" HorizontalAlignment="Left" Margin="154,258,0,0" VerticalAlignment="Top" Width="266" Height="63" Click="button_Click"/>
 
