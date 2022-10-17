@@ -38,7 +38,6 @@ namespace SenkouCards
             cmbFontSize.Text = temp.ToString();
         }
 
-        //Optional: to review
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
@@ -51,7 +50,6 @@ namespace SenkouCards
             }
         }
 
-        //Also optional
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog();
@@ -62,37 +60,6 @@ namespace SenkouCards
                 TextRange range = new TextRange(rtbEditor.Document.ContentStart, rtbEditor.Document.ContentEnd);
                 range.Save(fileStream, DataFormats.Rtf);
             }
-        }
-
-        private void btnUploadImage_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO: EXCEPTIONS
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Image files (*.jpg;*.png;*.jpeg)|*.jpg;*.png;*.jpeg;|All Files (*.*)|*.*";
-            dlg.RestoreDirectory = true;
-            if (dlg.ShowDialog() == true)
-            {
-                string selectedImageName = dlg.FileName;
-                TbxImagePath.Text = selectedImageName;
-
-            }
-
-        }
-
-        private void btnUploadAudio_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO: EXCEPTIONS
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Audio files (*.mp3;*.m4a;*.flac;*.wav)|*.mp3;*.m4a;*.flac;*.wav;|All Files (*.*)|*.*";
-            dlg.RestoreDirectory = true;
-            if (dlg.ShowDialog() == true)
-            {
-                string selectedAudioName = dlg.FileName;
-                TbxAudioPath.Text = selectedAudioName;
-
-
-            }
-
         }
 
         private void cmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -113,14 +80,16 @@ namespace SenkouCards
             }
         }
 
-        private void btnUploadServer_Click(object sender, RoutedEventArgs e)
+        private void btnUploadImage_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-        private void btnImportServer_Click(object sender, RoutedEventArgs e)
-        {
-
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Image Files|*.jpg;*.jpeg;*.png";
         }
 
+        private void btnUploadAudio_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Audio Files|*.mp3;*.flac;*.wav";
+        }
     }
 }

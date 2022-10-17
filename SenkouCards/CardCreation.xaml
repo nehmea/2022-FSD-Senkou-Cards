@@ -11,14 +11,12 @@
     <CommandBinding Command="ApplicationCommands.Open" Executed="Open_Executed" />
     <CommandBinding Command="ApplicationCommands.Save" Executed="Save_Executed" />
   </Window.CommandBindings>
-    <Grid>
-        <DockPanel LastChildFill="False">
-            <Button x:Name="btnUploadImage" DockPanel.Dock="Top" Content="Upload Image" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10" Click="btnUploadImage_Click"/>
-            <TextBox x:Name="TbxImagePath" IsReadOnly="True" Height="25" DockPanel.Dock="Top" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="400" Margin="10,10,10,10"/>
-            <Button x:Name="btnUploadAudio" DockPanel.Dock="Top" Content="Upload Audio" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10" Click="btnUploadAudio_Click"/>
-            <TextBox x:Name="TbxAudioPath" IsReadOnly="True" Height="25" DockPanel.Dock="Top" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="400"/>
-
-            <!-- Front -->
+  <Grid>
+    <DockPanel>
+      <Button x:Name="btnUploadImage" DockPanel.Dock="Top" Content="Upload Image" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10" Click="btnUploadImage_Click"/>
+      <Button x:Name="btnUploadAudio" DockPanel.Dock="Top" Content="Upload Audio" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10" Click="btnUploadAudio_Click"/>
+      
+      <!-- Front -->
       <ToolBar DockPanel.Dock="Top" Margin="10,10,10,0">
         <Button Command="ApplicationCommands.Open">
           <Image Source="/Images/folder.png" Width="16" Height="16" />
@@ -42,14 +40,13 @@
         <ComboBox Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged" />
         <ComboBox Name="cmbFontSize" Width="50" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged" />
       </ToolBar>
-      <RichTextBox DockPanel.Dock="Top" Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" Height="75" Margin="10,0,10,10"/>
+      <RichTextBox DockPanel.Dock="Top" Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" Height="100" Margin="10,0,10,10"/>
 
       <!-- Back -->
 
-      <RichTextBox DockPanel.Dock="Top" Name="rtbEditor2" SelectionChanged="rtbEditor_SelectionChanged" Height="75" Margin="10,10,10,10"/>
-      <Button x:Name="btnUploadServer" DockPanel.Dock="Right" Content="Upload to Server" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10" Click="btnUploadServer_Click"/>
-      <Button x:Name="btnImportServer" DockPanel.Dock="Right" Content="Import from Server" Height="25" VerticalAlignment="Top" Width="150" Margin="400,10,10,10" Click="btnImportServer_Click"/>
-            
-        </DockPanel>
+      <RichTextBox DockPanel.Dock="Top" Name="rtbEditor2" SelectionChanged="rtbEditor_SelectionChanged" Height="100" Margin="10,10,10,10"/>
+      <Button x:Name="btnUploadServer" DockPanel.Dock="Right" Content="Upload to Server" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10"/>
+      <Button x:Name="btnImportServer" DockPanel.Dock="Right" Content="Import from Server" Height="25" VerticalAlignment="Top" Width="150" Margin="400,10,10,10"/>
+    </DockPanel>
   </Grid>
 </Window>
