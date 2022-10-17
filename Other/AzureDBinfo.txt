@@ -1,0 +1,10 @@
+Server Name:
+senkoucards.database.windows.net
+
+Server Admin Login
+senkouadmin
+
+Password
+&dPz66x2qC2x@
+
+
