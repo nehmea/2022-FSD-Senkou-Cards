@@ -37,6 +37,23 @@ namespace SenkouCards
             }
         }
 
+
+        private static users _activeUser;
+
+        public static users ActiveUser
+        {
+            set
+            {
+                if (_activeUser == null)
+                {
+                    _activeUser = value;
+                }
+            }
+
+            get
+            {
+                return _activeUser;
+
         public static void AddListViewColumns<T>(GridView GvFOO)
         {
             foreach (System.Reflection.PropertyInfo property in typeof(T).GetProperties().Where(p => p.CanWrite)) //loop through the fields of the object
@@ -64,6 +81,7 @@ namespace SenkouCards
                     gvc.Header = property.Name; //set header name like the field name
                     GvFOO.Columns.Add(gvc); //add new column to the Gridview
                 }
+
             }
         }
 

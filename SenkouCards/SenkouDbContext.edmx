@@ -49,6 +49,7 @@
           <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="description" Type="varchar(max)" Nullable="false" />
           <Property Name="isOfficial" Type="bit" Nullable="false" />
+          <Property Name="ownerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="responses">
           <Key>
@@ -128,6 +129,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_decks_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="decks" Type="Self.decks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="decks">
+              <PropertyRef Name="ownerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_responses_attempts">
           <End Role="attempts" Type="Self.attempts" Multiplicity="1" />
           <End Role="responses" Type="Self.responses" Multiplicity="*" />
@@ -179,6 +192,10 @@
           <AssociationSet Name="FK_cardsImages_cards" Association="Self.FK_cardsImages_cards">
             <End Role="cards" EntitySet="cards" />
             <End Role="cardsImages" EntitySet="cardsImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_decks_users" Association="Self.FK_decks_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="decks" EntitySet="decks" />
           </AssociationSet>
           <AssociationSet Name="FK_responses_attempts" Association="Self.FK_responses_attempts">
             <End Role="attempts" EntitySet="attempts" />
@@ -248,6 +265,8 @@
           <Property Name="isOfficial" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="attempts" Relationship="Self.FK_attempts_decks" FromRole="decks" ToRole="attempts" />
           <NavigationProperty Name="cards" Relationship="Self.FK_cards_decks" FromRole="decks" ToRole="cards" />
+          <Property Name="ownerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="SenkoucardsModel.FK_decks_users" FromRole="decks" ToRole="users" />
         </EntityType>
         <EntityType Name="responses">
           <Key>
@@ -269,6 +288,7 @@
           <Property Name="password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="score" Type="Decimal" Precision="17" Scale="2" Nullable="false" />
           <NavigationProperty Name="attempts" Relationship="Self.FK_attempts_users" FromRole="users" ToRole="attempts" />
+          <NavigationProperty Name="decks" Relationship="SenkoucardsModel.FK_decks_users" FromRole="users" ToRole="decks" />
         </EntityType>
         <Association Name="FK_attempts_decks">
           <End Role="decks" Type="Self.decks" Multiplicity="1" />
@@ -390,7 +410,23 @@
             <End Role="cards" EntitySet="cards" />
             <End Role="responses" EntitySet="responses" />
           </AssociationSet>
+          <AssociationSet Name="FK_decks_users" Association="SenkoucardsModel.FK_decks_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="decks" EntitySet="decks" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_decks_users">
+          <End Type="SenkoucardsModel.users" Role="users" Multiplicity="1" />
+          <End Type="SenkoucardsModel.decks" Role="decks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="decks">
+              <PropertyRef Name="ownerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -440,6 +476,7 @@
           <EntitySetMapping Name="decks">
             <EntityTypeMapping TypeName="SenkoucardsModel.decks">
               <MappingFragment StoreEntitySet="decks">
+                <ScalarProperty Name="ownerId" ColumnName="ownerId" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />
