@@ -24,5 +24,11 @@ namespace SenkouCards
         {
             InitializeComponent();
         }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            var cardCreation = new CardCreation();
+            cardCreation.Show();
+        }
     }
 }

@@ -7,57 +7,37 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="SenkouCards.CardCreation"
         mc:Ignorable="d"
         Title="CardCreation" Height="450" Width="800">
+      <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="Open_Executed" />
+        <CommandBinding Command="ApplicationCommands.Save" Executed="Save_Executed" />
+      </Window.CommandBindings>
     <Grid>
-        <Grid.Resources>
-            <Style TargetType="{x:Type Button}" x:Key="formatTextStyle">
-                <Setter Property="FontFamily" Value="Palatino Linotype"></Setter>
-                <Setter Property="Width" Value="30"></Setter>
-                <Setter Property="FontSize" Value ="14"></Setter>
-                <Setter Property="CommandTarget" Value="{Binding ElementName=mainRTB}"></Setter>
-            </Style>
-
-            <Style TargetType="{x:Type Button}" x:Key="formatImageStyle">
-                <Setter Property="Width" Value="30"></Setter>
-                <Setter Property="CommandTarget" Value="{Binding ElementName=mainRTB}"></Setter>
-            </Style>
-        </Grid.Resources>
-
-        <DockPanel Name="mainPanel">
-
-            <!-- This tool bar contains all the editing buttons. -->
-            <ToolBar Name="mainToolBar" Height="30" DockPanel.Dock="Top">
-                <Button Style="{StaticResource formatTextStyle}" Command="EditingCommands.ToggleBold" ToolTip="Bold">
-                    <TextBlock FontWeight="Bold">B</TextBlock>
-                </Button>
-                <Button Style="{StaticResource formatTextStyle}" Command="EditingCommands.ToggleItalic" ToolTip="Italic">
-                    <TextBlock FontStyle="Italic" FontWeight="Bold">I</TextBlock>
-                </Button>
-                <Button Style="{StaticResource formatTextStyle}" Command="EditingCommands.ToggleUnderline" ToolTip="Underline">
-                    <TextBlock TextDecorations="Underline" FontWeight="Bold">U</TextBlock>
-                </Button>
-            </ToolBar>
-
-            <!-- By default pressing tab moves focus to the next control. Setting AcceptsTab to true allows the 
-           RichTextBox to accept tab characters. -->
-            <RichTextBox DockPanel.Dock="Top" x:Name="richTextBox" Height="85" Margin="80,20,74,0" VerticalAlignment="Top" AcceptsTab="True">
-                <FlowDocument>
-                    <Paragraph>
-                        <Run Text="RichTextBox"/>
-                    </Paragraph>
-                </FlowDocument>
-            </RichTextBox>
-            <RichTextBox DockPanel.Dock="Top" x:Name="richTextBox_Copy" HorizontalAlignment="Left" Height="85" Margin="80,30,0,0" VerticalAlignment="Top" Width="640" AcceptsTab="True">
-                <FlowDocument>
-                    <Paragraph>
-                        <Run Text="RichTextBox"/>
-                    </Paragraph>
-                </FlowDocument>
-            </RichTextBox>
-        </DockPanel>
-        <Button x:Name="button" Content="Upload Image" HorizontalAlignment="Left" Margin="80,342,0,0" VerticalAlignment="Top" Width="123"/>
-        <Button x:Name="button1" Content="Upload Audio" HorizontalAlignment="Left" Margin="80,367,0,0" VerticalAlignment="Top" Width="123"/>
-
-        <Label x:Name="label" Content="Back" HorizontalAlignment="Left" Margin="80,136,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label1" Content="Front" HorizontalAlignment="Left" Margin="80,28,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.447,1.269"/>
+      <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+          <Button Command="ApplicationCommands.Open">
+            <Image Source="/Images/folder.png" Width="16" Height="16" />
+          </Button>
+          <Button Command="ApplicationCommands.Save">
+            <Image Source="/Images/disk.png" Width="16" Height="16" />
+          </Button>
+          <Separator />
+          <ToggleButton Command="EditingCommands.ToggleBold" Name="btnBold">
+            <TextBlock FontWeight="Bold">B</TextBlock>
+          </ToggleButton>
+          <Separator />
+          <ToggleButton Command="EditingCommands.ToggleItalic" Name="btnItalic">
+            <TextBlock FontStyle="Italic" FontWeight="Bold">I</TextBlock>
+          </ToggleButton>
+          <Separator />
+          <ToggleButton Command="EditingCommands.ToggleUnderline" Name="btnUnderline">
+            <TextBlock TextDecorations="Underline" FontWeight="Bold">U</TextBlock>
+          </ToggleButton>
+          <Separator />
+          <ComboBox Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged" />
+          <ComboBox Name="cmbFontSize" Width="50" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged" />
+        </ToolBar>
+        <RichTextBox DockPanel.Dock="Top" Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" />
+        <RichTextBox DockPanel.Dock="Top" Name="rtbEditor2" SelectionChanged="rtbEditor_SelectionChanged" />
+      </DockPanel>
     </Grid>
 </Window>
