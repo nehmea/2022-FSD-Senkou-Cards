@@ -29,10 +29,6 @@ namespace SenkouCards
         {
             var cardCreation = new CardCreation();
             cardCreation.Show();
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Login login = new Login();
-            login.ShowDialog();
         }
     }
 }

@@ -53,10 +53,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -66,83 +62,16 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="attempts.cs">
-      <DependentUpon>SenkouDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="cards.cs">
-      <DependentUpon>SenkouDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="cardsAudios.cs">
-      <DependentUpon>SenkouDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="cardsImages.cs">
-      <DependentUpon>SenkouDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WindowDeckInfo.xaml.cs">
-      <DependentUpon>WindowDeckInfo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="decks.cs">
-      <DependentUpon>SenkouDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WindowDecks.xaml.cs">
-      <DependentUpon>WindowDecks.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Globals.cs" />
-    <Compile Include="Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="partials\users.cs" />
-    <Compile Include="Register.xaml.cs">
-      <DependentUpon>Register.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="responses.cs">
-      <DependentUpon>SenkouDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SenkouDbContext.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SenkouDbContext.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SenkouDbContext.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SenkouDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SenkouDbContext.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SenkouDbContext.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="WindowUserDecks.xaml.cs">
-      <DependentUpon>WindowUserDecks.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="users.cs">
-      <DependentUpon>SenkouDbContext.tt</DependentUpon>
-    </Compile>
-
-    <Compile Include="Validation.cs" />
-
-    <Page Include="WindowDeckInfo.xaml">
-
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WindowDecks.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Login.xaml">
+    <Page Include="CardCreation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,14 +90,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Register.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WindowUserDecks.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -193,32 +114,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="SenkouDbContext.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SenkouDbContext.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="SenkouDbContext.edmx.diagram">
-      <DependentUpon>SenkouDbContext.edmx</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />
-    <Content Include="SenkouDbContext.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SenkouDbContext.edmx</DependentUpon>
-      <LastGenOutput>SenkouDbContext.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="SenkouDbContext.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SenkouDbContext.edmx</DependentUpon>
-      <LastGenOutput>SenkouDbContext.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
