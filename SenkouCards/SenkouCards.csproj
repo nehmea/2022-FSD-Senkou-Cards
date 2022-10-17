@@ -89,14 +89,14 @@
     <Compile Include="cardsImages.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DeckInfo.xaml.cs">
-      <DependentUpon>DeckInfo.xaml</DependentUpon>
+    <Compile Include="WindowDeckInfo.xaml.cs">
+      <DependentUpon>WindowDeckInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="decks.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Decks.xaml.cs">
-      <DependentUpon>Decks.xaml</DependentUpon>
+    <Compile Include="WindowDecks.xaml.cs">
+      <DependentUpon>WindowDecks.xaml</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Register.xaml.cs">
@@ -120,14 +120,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SenkouDbContext.edmx</DependentUpon>
     </Compile>
+    <Compile Include="WindowUserDecks.xaml.cs">
+      <DependentUpon>WindowUserDecks.xaml</DependentUpon>
+    </Compile>
     <Compile Include="users.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
-    <Page Include="DeckInfo.xaml">
+    <Page Include="WindowDeckInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Decks.xaml">
+    <Page Include="WindowDecks.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,6 +147,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Register.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowUserDecks.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
