@@ -14,7 +14,7 @@
   <Grid>
     <DockPanel>
       <Button x:Name="btnUploadImage" DockPanel.Dock="Top" Content="Upload Image" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10" Click="btnUploadImage_Click"/>
-      <Button x:Name="btnUploadAudio" DockPanel.Dock="Top" Content="Upload Audio" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10"/>
+      <Button x:Name="btnUploadAudio" DockPanel.Dock="Top" Content="Upload Audio" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10" Click="btnUploadAudio_Click"/>
       
       <!-- Front -->
       <ToolBar DockPanel.Dock="Top" Margin="10,10,10,0">

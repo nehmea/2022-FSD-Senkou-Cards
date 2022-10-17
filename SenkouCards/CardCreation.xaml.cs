@@ -74,7 +74,7 @@ namespace SenkouCards
             {
                 rtbEditor.Selection.ApplyPropertyValue(Inline.FontSizeProperty, cmbFontSize.Text);
             }
-            catch (Exception ex) when (ex is SystemException || ex is FormatException)
+            catch (Exception ex)
             {
                 MessageBox.Show(this, "Invalid Font Size: \n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -84,6 +84,12 @@ namespace SenkouCards
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "Image Files|*.jpg;*.jpeg;*.png";
+        }
+
+        private void btnUploadAudio_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Audio Files|*.mp3;*.flac;*.wav";
         }
     }
 }
