@@ -24,5 +24,11 @@ namespace SenkouCards
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Login login = new Login();
+            login.ShowDialog();
+        }
     }
 }

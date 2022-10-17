@@ -20,9 +20,10 @@ namespace SenkouCards
     /// </summary>
     public partial class Login : Window
     {
-        public Login()
+        public Login(string registerSuccess="")
         {
             InitializeComponent();
+            Lbl_RegistrationMessage.Content = registerSuccess;
         }
 
 
@@ -37,6 +38,7 @@ namespace SenkouCards
                 if(user.password==password)
                 {
                     Globals.ActiveUser = user;
+                    this.DialogResult = true;
                 }
             }
             catch(Exception ex)
@@ -48,7 +50,10 @@ namespace SenkouCards
         private void Btn_Register_Click(object sender, RoutedEventArgs e)
         {
             //test code, delete later
-            MessageBox.Show(Globals.ActiveUser.username, "Username", MessageBoxButton.OK);
+            //MessageBox.Show(Globals.ActiveUser.username, "Username", MessageBoxButton.OK);
+            this.DialogResult = false;
+            Register register = new Register();
+            register.ShowDialog();
         }
     }
 }

@@ -18,6 +18,7 @@ namespace SenkouCards
         public users()
         {
             this.attempts = new HashSet<attempts>();
+            this.decks = new HashSet<decks>();
         }
     
         public int id { get; set; }
@@ -27,5 +28,7 @@ namespace SenkouCards
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<attempts> attempts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<decks> decks { get; set; }
     }
 }

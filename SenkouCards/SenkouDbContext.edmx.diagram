@@ -19,6 +19,7 @@
         <AssociationConnector Association="SenkoucardsModel.FK_cardsAudios_cards" ManuallyRouted="false" />
         <AssociationConnector Association="SenkoucardsModel.FK_cardsImages_cards" ManuallyRouted="false" />
         <AssociationConnector Association="SenkoucardsModel.FK_responses_cards" ManuallyRouted="false" />
+        <AssociationConnector Association="SenkoucardsModel.FK_decks_users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

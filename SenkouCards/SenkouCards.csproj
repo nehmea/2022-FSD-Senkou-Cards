@@ -102,6 +102,7 @@
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Compile Include="partials\users.cs" />
     <Compile Include="Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
@@ -126,6 +127,7 @@
     <Compile Include="users.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Validation.cs" />
     <Page Include="DeckInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
