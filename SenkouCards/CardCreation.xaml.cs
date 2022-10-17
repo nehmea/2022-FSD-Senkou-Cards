@@ -79,5 +79,11 @@ namespace SenkouCards
                 MessageBox.Show(this, "Invalid Font Size: \n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void btnUploadImage_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Image Files|*.jpg;*.jpeg;*.png";
+        }
     }
 }

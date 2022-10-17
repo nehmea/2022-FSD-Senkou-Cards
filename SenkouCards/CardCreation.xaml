@@ -7,37 +7,46 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="SenkouCards.CardCreation"
         mc:Ignorable="d"
         Title="CardCreation" Height="450" Width="800">
-      <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.Open" Executed="Open_Executed" />
-        <CommandBinding Command="ApplicationCommands.Save" Executed="Save_Executed" />
-      </Window.CommandBindings>
-    <Grid>
-      <DockPanel>
-        <ToolBar DockPanel.Dock="Top">
-          <Button Command="ApplicationCommands.Open">
-            <Image Source="/Images/folder.png" Width="16" Height="16" />
-          </Button>
-          <Button Command="ApplicationCommands.Save">
-            <Image Source="/Images/disk.png" Width="16" Height="16" />
-          </Button>
-          <Separator />
-          <ToggleButton Command="EditingCommands.ToggleBold" Name="btnBold">
-            <TextBlock FontWeight="Bold">B</TextBlock>
-          </ToggleButton>
-          <Separator />
-          <ToggleButton Command="EditingCommands.ToggleItalic" Name="btnItalic">
-            <TextBlock FontStyle="Italic" FontWeight="Bold">I</TextBlock>
-          </ToggleButton>
-          <Separator />
-          <ToggleButton Command="EditingCommands.ToggleUnderline" Name="btnUnderline">
-            <TextBlock TextDecorations="Underline" FontWeight="Bold">U</TextBlock>
-          </ToggleButton>
-          <Separator />
-          <ComboBox Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged" />
-          <ComboBox Name="cmbFontSize" Width="50" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged" />
-        </ToolBar>
-        <RichTextBox DockPanel.Dock="Top" Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" />
-        <RichTextBox DockPanel.Dock="Top" Name="rtbEditor2" SelectionChanged="rtbEditor_SelectionChanged" />
-      </DockPanel>
-    </Grid>
+  <Window.CommandBindings>
+    <CommandBinding Command="ApplicationCommands.Open" Executed="Open_Executed" />
+    <CommandBinding Command="ApplicationCommands.Save" Executed="Save_Executed" />
+  </Window.CommandBindings>
+  <Grid>
+    <DockPanel>
+      <Button x:Name="btnUploadImage" DockPanel.Dock="Top" Content="Upload Image" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10" Click="btnUploadImage_Click"/>
+      <Button x:Name="btnUploadAudio" DockPanel.Dock="Top" Content="Upload Audio" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10"/>
+      
+      <!-- Front -->
+      <ToolBar DockPanel.Dock="Top" Margin="10,10,10,0">
+        <Button Command="ApplicationCommands.Open">
+          <Image Source="/Images/folder.png" Width="16" Height="16" />
+        </Button>
+        <Button Command="ApplicationCommands.Save">
+          <Image Source="/Images/disk.png" Width="16" Height="16" />
+        </Button>
+        <Separator />
+        <ToggleButton Command="EditingCommands.ToggleBold" Name="btnBold">
+          <TextBlock FontWeight="Bold">B</TextBlock>
+        </ToggleButton>
+        <Separator />
+        <ToggleButton Command="EditingCommands.ToggleItalic" Name="btnItalic">
+          <TextBlock FontStyle="Italic" FontWeight="Bold">I</TextBlock>
+        </ToggleButton>
+        <Separator />
+        <ToggleButton Command="EditingCommands.ToggleUnderline" Name="btnUnderline">
+          <TextBlock TextDecorations="Underline" FontWeight="Bold">U</TextBlock>
+        </ToggleButton>
+        <Separator />
+        <ComboBox Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged" />
+        <ComboBox Name="cmbFontSize" Width="50" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged" />
+      </ToolBar>
+      <RichTextBox DockPanel.Dock="Top" Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" Height="100" Margin="10,0,10,10"/>
+
+      <!-- Back -->
+
+      <RichTextBox DockPanel.Dock="Top" Name="rtbEditor2" SelectionChanged="rtbEditor_SelectionChanged" Height="100" Margin="10,10,10,10"/>
+      <Button x:Name="btnUploadServer" DockPanel.Dock="Right" Content="Upload to Server" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10"/>
+      <Button x:Name="btnImportServer" DockPanel.Dock="Right" Content="Import from Server" Height="25" VerticalAlignment="Top" Width="150" Margin="400,10,10,10"/>
+    </DockPanel>
+  </Grid>
 </Window>
