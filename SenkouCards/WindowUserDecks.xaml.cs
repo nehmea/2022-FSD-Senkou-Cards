@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace SenkouCards
 {
@@ -11,30 +13,27 @@ namespace SenkouCards
     /// </summary>
     public partial class UserDecks : Window
     {
+        private GridViewColumnHeader _lastHeaderClicked = null;
+        private ListSortDirection _lastDirection = ListSortDirection.Ascending;
+
         public UserDecks()
         {
+
             InitializeComponent();
+            if (Globals.ActiveUser == null)
+            {
+                Globals.ActiveUser = Globals.SenkouDbAuto.users.Find(2);
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                List<string> excluded = new List<string>() { "responses", "users", "userId" };
+                List<string> excluded = new List<string>() { "responses", "users", "userId", "decks", "deckId" };
                 Globals.AddListViewColumns<attempts>(GvDecks, excluded);
 
-                // get list of unique deckIds
-                // for each of these deckIds get the count of attempts, and the top score (max of score) and its date
-                // 
-                List<attempts> listOfAttempts = Globals.SenkouDbAuto.attempts.Where(attempt => attempt.userId == Globals.userId).ToList();
-                Console.WriteLine(listOfAttempts);
-                foreach (attempts attempt in listOfAttempts)
-                {
-                    Console.WriteLine(attempt.ToString());
-                }
-                //create a list of lists
-                //run foreach attempt in listOfAttempts, get deckId
-                //LvUserDecks.ItemsSource = Globals.SenkouDbAuto.attempts.Where(attempt => attempt.userId == Globals.userId).decks.ToList(); // equivalent of SELECT * FROM People
+                LvUserDecks.ItemsSource = Globals.SenkouDbAuto.attempts.Where(attempt => attempt.userId == Globals.ActiveUser.id).ToList();
             }
             catch (SystemException ex)
             {
@@ -43,21 +42,13 @@ namespace SenkouCards
             }
         }
 
-        /**
-         * 
-         */
-        private void TbxSearchDecks_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            // fetch decks where title or description includes search text
-
-        }
 
         /**
          * 
          */
         private void LvUserDecks_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            setButtonsStatus();
         }
 
         /**
@@ -65,7 +56,6 @@ namespace SenkouCards
          */
         private void LvUserDecks_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
         }
 
         /**
@@ -98,6 +88,76 @@ namespace SenkouCards
         private void BtnExportDeck_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void LvHeader_Click(object sender, RoutedEventArgs e)
+        {
+            var headerClicked = e.OriginalSource as GridViewColumnHeader; //get the clicked header by the RoutedEventArgs
+            ListSortDirection direction;
+
+            if (headerClicked != null && headerClicked.Role != GridViewColumnHeaderRole.Padding) //check if header is clicked
+            {
+                if (headerClicked != _lastHeaderClicked) //set direction to ascending if new column clicked
+                {
+                    direction = ListSortDirection.Ascending;
+                }
+                else
+                {
+                    if (_lastDirection == ListSortDirection.Ascending) // else set direction to opposite from previous click if smae column clicked
+                    {
+                        direction = ListSortDirection.Descending;
+                    }
+                    else
+                    {
+                        direction = ListSortDirection.Ascending;
+                    }
+                }
+
+                var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding; // get the binding of the clicked column
+                var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string; // get the first not null value of binding path or column header
+
+                Sort(sortBy, direction, LvUserDecks); //sort 
+
+
+                _lastHeaderClicked = headerClicked;
+                _lastDirection = direction;
+            }
+        }
+
+        private void Sort(string sortBy, ListSortDirection direction, ListView LvFoo)
+        {
+            ICollectionView dataView =
+              CollectionViewSource.GetDefaultView(LvFoo.ItemsSource);
+
+            dataView.SortDescriptions.Clear();
+            SortDescription sd = new SortDescription(sortBy, direction);
+            dataView.SortDescriptions.Add(sd);
+            dataView.Refresh();
+        }
+
+        private void TbxSearchDecks_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchString = TbxSearchDecks.Text;
+            if (searchString == "")
+            {
+                LvUserDecks.ItemsSource = Globals.SenkouDbAuto.attempts.Where(attempt => attempt.userId == Globals.ActiveUser.id).ToList();
+            }
+            else
+            {
+                LvUserDecks.ItemsSource = Globals.SenkouDbAuto.attempts
+                    .Include("decks")
+                    .Where(attempt => attempt.userId == Globals.ActiveUser.id && attempt.decks.name.Contains(searchString))
+                    .ToList();
+
+            }
+
+        }
+        private void setButtonsStatus()
+        {
+            decks currentlySelectedDeck = LvUserDecks.SelectedItem as decks;
+            BtnCreateDeck.IsEnabled = (Globals.ActiveUser != null);
+            BtnExportDeck.IsEnabled = (currentlySelectedDeck != null && LvUserDecks.SelectedItems.Count == 1);
+            BtnDeckInfo.IsEnabled = (currentlySelectedDeck != null && LvUserDecks.SelectedItems.Count == 1);
         }
 
     }

@@ -7,9 +7,10 @@
         mc:Ignorable="d" Loaded="Window_Loaded"
         Title="UserDecks" Height="570" Width="524">
     <Grid Margin="0,0,10,0">
-        <ListView Name="LvUserDecks" Height="388" VerticalAlignment="Top" Margin="49,77,34,0" SelectionChanged="LvUserDecks_SelectionChanged" MouseDoubleClick="LvUserDecks_MouseDoubleClick" SelectionMode="Single">
+        <ListView Name="LvUserDecks" Height="388" VerticalAlignment="Top" Margin="49,77,34,0" SelectionChanged="LvUserDecks_SelectionChanged" MouseDoubleClick="LvUserDecks_MouseDoubleClick" SelectionMode="Single" GridViewColumnHeader.Click="LvHeader_Click">
             <ListView.View>
                 <GridView x:Name="GvDecks">
+                    <GridViewColumn Header="Deck Name" DisplayMemberBinding="{Binding decks.name}"></GridViewColumn>
                     <!--
                     <GridViewColumn Header="Deck" Width="200"></GridViewColumn>
                     <GridViewColumn Header="No. of Attempts" Width="100"></GridViewColumn>
@@ -21,8 +22,8 @@
         <Button Name="BtnCreateDeck" Content="Create a Deck" HorizontalAlignment="Left" Margin="11,507,0,0" VerticalAlignment="Top" Width="112" Click="BtnCreateDeck_Click"/>
         <Button Name="BtnImportDeck" Content="Import a Deck" HorizontalAlignment="Left" Margin="140,507,0,0" VerticalAlignment="Top" Width="112" Click="BtnImportDeck_Click"/>
         <Button x:Name="BtnDeckInfo" Content="More info" HorizontalAlignment="Left" Margin="392,507,0,0" VerticalAlignment="Top" Width="112" Click="BtnDeckInfo_Click"/>
-        <Button x:Name="BtnExportDeck" Content="Import a Deck" HorizontalAlignment="Left" Margin="264,507,0,0" VerticalAlignment="Top" Width="112" Click="BtnExportDeck_Click"/>
+        <Button x:Name="BtnExportDeck" Content="Export a Deck" HorizontalAlignment="Left" Margin="264,507,0,0" VerticalAlignment="Top" Width="112" Click="BtnExportDeck_Click"/>
         <Label Content="Search" HorizontalAlignment="Left" Margin="100,23,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="TbxSearchDecks" HorizontalAlignment="Center" Margin="0,27,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" SelectionChanged="TbxSearchDecks_SelectionChanged"/>
+        <TextBox Name="TbxSearchDecks" HorizontalAlignment="Center" Margin="0,27,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TbxSearchDecks_TextChanged"/>
     </Grid>
 </Window>
