@@ -164,7 +164,6 @@ namespace SenkouCards
                 var db = new SenkoucardsConfig();
                 var cardsImages = new cardsImages()
                 {
-                    //TO FIGURE OUT: HOW TO ADD ID
                     cardId = newCard.id,
                     image = _imageBytes
                 };
@@ -175,7 +174,6 @@ namespace SenkouCards
                 var db = new SenkoucardsConfig();
                 var cardsAudio = new cardsAudios()
                 {
-                    //TO FIGURE OUT: HOW TO ADD ID
                     cardId = newCard.id,
                     audio = _audioBytes
                 };
