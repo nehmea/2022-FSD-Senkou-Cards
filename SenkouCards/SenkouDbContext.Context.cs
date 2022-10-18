@@ -18,6 +18,7 @@ namespace SenkouCards
         public SenkoucardsConfig()
             : base("name=SenkoucardsConfig")
         {
+            //this.Configuration.LazyLoadingEnabled = true;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

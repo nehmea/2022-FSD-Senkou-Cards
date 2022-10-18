@@ -17,14 +17,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="BtnAddSelected" Content="Add selection to MyDecks" HorizontalAlignment="Left" Margin="236,0,0,505" Width="168" Click="BtnAddSelected_Click" RenderTransformOrigin="0.639,-3.996" Height="20" VerticalAlignment="Bottom"/>
-        <Button Name="BtnCreateDeck" Content="Create a Deck" HorizontalAlignment="Left" Margin="85,512,0,0" VerticalAlignment="Top" Width="112" Click="BtnCreateDeck_Click"/>
+        <Button Name="BtnCreateDeck" Content="Create a Deck" HorizontalAlignment="Left" Margin="49,512,0,0" VerticalAlignment="Top" Width="112" Click="BtnCreateDeck_Click"/>
         <Button Name="BtnImportDeck" Content="Import a Deck" HorizontalAlignment="Left" Margin="214,512,0,0" VerticalAlignment="Top" Width="112" Click="BtnImportDeck_Click"/>
-        <Button x:Name="BtnDeckInfo" Content="More info" HorizontalAlignment="Left" Margin="421,30,0,0" VerticalAlignment="Top" Width="112" Click="BtnDeckInfo_Click"/>
-        <Button x:Name="BtnExportDeck" Content="Export Selected" HorizontalAlignment="Left" Margin="338,512,0,0" VerticalAlignment="Top" Width="112" Click="BtnExportDeck_Click"/>
+        <Button x:Name="BtnDeckInfo" Content="More info" HorizontalAlignment="Left" Margin="393,25,0,0" VerticalAlignment="Top" Width="112" Click="BtnDeckInfo_Click"/>
+        <Button x:Name="BtnExportDeck" Content="Export Selected" HorizontalAlignment="Left" Margin="380,512,0,0" VerticalAlignment="Top" Width="112" Click="BtnExportDeck_Click"/>
         <Label Content="Search" HorizontalAlignment="Left" Margin="49,23,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="TbxSearchDecks" HorizontalAlignment="Left" Margin="99,27,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" SelectionChanged="TbxSearchDecks_SelectionChanged"/>
-        <Button x:Name="BtnViewUserDecks" Content="My Decks" HorizontalAlignment="Left" Margin="329,55,0,0" VerticalAlignment="Top" Width="112" Click="BtnViewUserDecks_Click"/>
+        <TextBox Name="TbxSearchDecks" HorizontalAlignment="Left" Margin="99,27,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TbxSearchDecks_TextChanged"/>
+        <Button x:Name="BtnViewUserDecks" Content="My Decks" HorizontalAlignment="Left" Margin="252,25,0,0" VerticalAlignment="Top" Width="112" Click="BtnViewUserDecks_Click"/>
 
     </Grid>
 </Window>

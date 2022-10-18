@@ -1,8 +1,12 @@
-﻿using System;
+﻿using CsvHelper.Configuration;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -10,8 +14,6 @@ namespace SenkouCards
 {
     public class Globals
     {
-
-        public static int userId = 2;
 
         //Singleton DB Context
         private static SenkoucardsConfig _SenkouDbContextInternal;
@@ -56,6 +58,10 @@ namespace SenkouCards
             }
         }
 
+
+        /**
+        * Overloaded function that dynamically changes column names based on class properties
+        * */
         public static void AddListViewColumns<T>(GridView GvFOO)
         {
             foreach (System.Reflection.PropertyInfo property in typeof(T).GetProperties().Where(p => p.CanWrite)) //loop through the fields of the object
@@ -71,6 +77,10 @@ namespace SenkouCards
             }
         }
 
+        /**
+         * Overloaded function to dynamically change column names based on class properties
+         * with an excluded list to exclude from headers
+         * */
         public static void AddListViewColumns<T>(GridView GvFOO, List<string> excluded)
         {
             foreach (System.Reflection.PropertyInfo property in typeof(T).GetProperties().Where(p => p.CanWrite)) //loop through the fields of the object
@@ -87,5 +97,75 @@ namespace SenkouCards
             }
         }
 
+        /**
+         * A function that sorts the current view by clicking on clumn header
+         * */
+        public static void LvHeader_Click(object sender, RoutedEventArgs e, GridViewColumnHeader _lastHeaderClicked, ListSortDirection _lastDirection, ListView LvFOO)
+        {
+            var headerClicked = e.OriginalSource as GridViewColumnHeader; //get the clicked header by the RoutedEventArgs
+            ListSortDirection direction;
+
+            if (headerClicked != null && headerClicked.Role != GridViewColumnHeaderRole.Padding) //check if header is clicked
+            {
+                if (headerClicked != _lastHeaderClicked) //set direction to ascending if new column clicked
+                {
+                    direction = ListSortDirection.Ascending;
+                }
+                else
+                {
+                    if (_lastDirection == ListSortDirection.Ascending) // else set direction to opposite from previous click if smae column clicked
+                    {
+                        direction = ListSortDirection.Descending;
+                    }
+                    else
+                    {
+                        direction = ListSortDirection.Ascending;
+                    }
+                }
+                var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding; // get the binding of the clicked column
+                var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string; // get the first not null value of binding path or column header
+                Sort(sortBy, direction, LvFOO); //sort 
+
+                _lastHeaderClicked = headerClicked;
+                _lastDirection = direction;
+            }
+        }
+
+        public static void Sort(string sortBy, ListSortDirection direction, ListView LvFOO)
+        {
+            ICollectionView dataView = CollectionViewSource.GetDefaultView(LvFOO.ItemsSource);
+
+            dataView.SortDescriptions.Clear();
+            SortDescription sd = new SortDescription(sortBy, direction);
+            dataView.SortDescriptions.Add(sd);
+            dataView.Refresh();
+        }
+
+        public sealed class CardsMap : ClassMap<cards>
+        {
+            public CardsMap()
+            {
+                AutoMap(CultureInfo.InvariantCulture);
+                Map(m => m.decks).Ignore();
+                Map(m => m.responses).Ignore();
+            }
+        }
+
+        public static string CreateFileHeaderFromProperties<T>(List<string> excluded)
+        {
+            var headerList = typeof(T).GetProperties()
+                .Where(x => (!excluded.Contains(x.Name)))
+                .Select(x => x.Name).ToList();
+            string headerString = String.Join(",", headerList);
+            return headerString;
+        }
+        public static string CreateStringFromProperties<T>(T source, List<string> excluded)
+        {
+            var propertiesList = typeof(T).GetProperties()
+                .Where(x => (!excluded.Contains(x.Name)))
+                .Select(x => x.GetValue(source) ?? "").ToList();
+            string propertyString = String.Join(",", propertiesList);
+            return propertyString;
+        }
     }
 }
