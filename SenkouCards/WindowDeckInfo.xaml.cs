@@ -22,5 +22,13 @@ namespace SenkouCards
             TblCardsNumber.Text = currentDeck.cards.ToList().Count.ToString();
             TblDescription.Text = currentDeck.description;
         }
+
+
+        private void Btn_Attempt_Click(object sender, RoutedEventArgs e)
+        {
+            WindowOfficialTestEn windowOfficialTestEn = new WindowOfficialTestEn(currentDeck);
+            this.Close();
+            windowOfficialTestEn.Show();
+        }
     }
 }

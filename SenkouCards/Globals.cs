@@ -53,6 +53,8 @@ namespace SenkouCards
             get
             {
                 return _activeUser;
+            }
+        }
 
         public static void AddListViewColumns<T>(GridView GvFOO)
         {

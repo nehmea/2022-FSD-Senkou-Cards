@@ -27,7 +27,7 @@
             </Grid>
         </Border>
         <Button Content="Edit" HorizontalAlignment="Left" Margin="49,490,0,0" VerticalAlignment="Top" Width="121" Height="27"/>
-        <Button Content="Attempt" HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" Width="120" Height="27"/>
+        <Button x:Name="Btn_Attempt" Content="Attempt" HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" Width="120" Height="27" Click="Btn_Attempt_Click"  />
         <Button Content="History" HorizontalAlignment="Left" Margin="355,490,0,0" VerticalAlignment="Top" Width="120" Height="27"/>
 
 
