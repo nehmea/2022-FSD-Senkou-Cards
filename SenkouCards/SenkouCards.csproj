@@ -247,6 +247,7 @@
       <DependentUpon>SenkouDbContext.edmx</DependentUpon>
       <LastGenOutput>SenkouDbContext.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="SenkouDbContext.edmx.sql" />
     <Content Include="SenkouDbContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SenkouDbContext.edmx</DependentUpon>

@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Text.RegularExpressions;
 using System;
+using System.Drawing.Imaging;
+using System.Text;
 
 namespace SenkouCards
 {
@@ -17,24 +19,25 @@ namespace SenkouCards
     /// </summary>
     public partial class CardCreation : Window
     {
+        private SenkoucardsConfig dbContext;
         public CardCreation()
         {
             InitializeComponent();
             cmbFontFamily.ItemsSource = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
             cmbFontSize.ItemsSource = new List<double>() { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 };
         }
-        private void rtbEditor_SelectionChanged(object sender, RoutedEventArgs e)
+        private void RtbFront_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            object temp = rtbEditor.Selection.GetPropertyValue(Inline.FontWeightProperty);
+            object temp = RtbFront.Selection.GetPropertyValue(Inline.FontWeightProperty);
             btnBold.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontWeights.Bold));
-            temp = rtbEditor.Selection.GetPropertyValue(Inline.FontStyleProperty);
+            temp = RtbFront.Selection.GetPropertyValue(Inline.FontStyleProperty);
             btnItalic.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontStyles.Italic));
-            temp = rtbEditor.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
+            temp = RtbFront.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
             btnUnderline.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(TextDecorations.Underline));
 
-            temp = rtbEditor.Selection.GetPropertyValue(Inline.FontFamilyProperty);
+            temp = RtbFront.Selection.GetPropertyValue(Inline.FontFamilyProperty);
             cmbFontFamily.SelectedItem = temp;
-            temp = rtbEditor.Selection.GetPropertyValue(Inline.FontSizeProperty);
+            temp = RtbFront.Selection.GetPropertyValue(Inline.FontSizeProperty);
             cmbFontSize.Text = temp.ToString();
         }
 
@@ -46,7 +49,7 @@ namespace SenkouCards
             if (dlg.ShowDialog() == true)
             {
                 FileStream fileStream = new FileStream(dlg.FileName, FileMode.Open);
-                TextRange range = new TextRange(rtbEditor.Document.ContentStart, rtbEditor.Document.ContentEnd);
+                TextRange range = new TextRange(RtbFront.Document.ContentStart, RtbFront.Document.ContentEnd);
                 range.Load(fileStream, DataFormats.Rtf);
             }
         }
@@ -59,11 +62,11 @@ namespace SenkouCards
             if (dlg.ShowDialog() == true)
             {
                 FileStream fileStream = new FileStream(dlg.FileName, FileMode.Create);
-                TextRange range = new TextRange(rtbEditor.Document.ContentStart, rtbEditor.Document.ContentEnd);
+                TextRange range = new TextRange(RtbFront.Document.ContentStart, RtbFront.Document.ContentEnd);
                 range.Save(fileStream, DataFormats.Rtf);
             }
         }
-
+        private byte[] _imageBytes = null;
         private void btnUploadImage_Click(object sender, RoutedEventArgs e)
         {
             //TODO: EXCEPTIONS
@@ -74,11 +77,18 @@ namespace SenkouCards
             {
                 string selectedImageName = dlg.FileName;
                 TbxImagePath.Text = selectedImageName;
-
+                
+                using (var fs = new FileStream(selectedImageName, FileMode.Open, FileAccess.Read))
+                {
+                    _imageBytes = new byte[fs.Length];
+                    fs.Read(_imageBytes, 0, Convert.ToInt32(fs.Length));
+                }
             }
 
         }
 
+
+        private byte[] _audioBytes = null;
         private void btnUploadAudio_Click(object sender, RoutedEventArgs e)
         {
             //TODO: EXCEPTIONS
@@ -90,6 +100,11 @@ namespace SenkouCards
                 string selectedAudioName = dlg.FileName;
                 TbxAudioPath.Text = selectedAudioName;
 
+                using (var fs = new FileStream(selectedAudioName, FileMode.Open, FileAccess.Read))
+                {
+                    _audioBytes = new byte[fs.Length];
+                    fs.Read(_audioBytes, 0, Convert.ToInt32(fs.Length));
+                }
 
             }
 
@@ -98,14 +113,14 @@ namespace SenkouCards
         private void cmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cmbFontFamily.SelectedItem != null)
-                rtbEditor.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, cmbFontFamily.SelectedItem);
+                RtbFront.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, cmbFontFamily.SelectedItem);
         }
 
         private void cmbFontSize_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
-                rtbEditor.Selection.ApplyPropertyValue(Inline.FontSizeProperty, cmbFontSize.Text);
+                RtbFront.Selection.ApplyPropertyValue(Inline.FontSizeProperty, cmbFontSize.Text);
             }
             catch (Exception ex)
             {
@@ -115,6 +130,55 @@ namespace SenkouCards
 
         private void btnUploadServer_Click(object sender, RoutedEventArgs e)
         {
+            //TODO: EXCEPTIONS
+
+            //Front
+            string frontText;
+            TextRange tr = new TextRange(RtbFront.Document.ContentStart, RtbFront.Document.ContentEnd);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                tr.Save(ms, DataFormats.Rtf);
+                frontText = Encoding.ASCII.GetString(ms.ToArray());
+            }
+            
+            //Back
+            string backText;
+            TextRange tr2 = new TextRange(RtbBack.Document.ContentStart, RtbBack.Document.ContentEnd);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                tr2.Save(ms, DataFormats.Rtf);
+                backText = Encoding.ASCII.GetString(ms.ToArray());
+            }
+
+            //Points
+            //Numbers only exception and validation: TODO
+            int.TryParse(TbxPoints.Text, out int points);
+            cards newCard = new cards { front = frontText, back = backText, points = points };
+            
+            dbContext.cards.Add(newCard);
+            dbContext.SaveChanges();
+
+            //Image
+            if (!String.IsNullOrEmpty(TbxImagePath.Text))
+            {
+                var db = new SenkoucardsConfig();
+                var cardsImages = new cardsImages()
+                {
+                    cardId = newCard.id,
+                    image = _imageBytes
+                };
+            }
+            //Audio
+            if (!String.IsNullOrEmpty(TbxAudioPath.Text))
+            {
+                var db = new SenkoucardsConfig();
+                var cardsAudio = new cardsAudios()
+                {
+                    cardId = newCard.id,
+                    audio = _audioBytes
+                };
+            }
+
 
         }
         private void btnImportServer_Click(object sender, RoutedEventArgs e)
