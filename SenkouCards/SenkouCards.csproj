@@ -50,8 +50,12 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=4.6.1.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>packages\MaterialDesignThemes.4.6.1\lib\net462\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
@@ -124,17 +128,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SenkouDbContext.edmx</DependentUpon>
     </Compile>
+    <Compile Include="WindowOfficialTestEn.xaml.cs">
+      <DependentUpon>WindowOfficialTestEn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowUserDecks.xaml.cs">
       <DependentUpon>WindowUserDecks.xaml</DependentUpon>
     </Compile>
     <Compile Include="users.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
-
     <Compile Include="Validation.cs" />
-
     <Page Include="WindowDeckInfo.xaml">
-
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,6 +163,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Register.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowOfficialTestEn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
