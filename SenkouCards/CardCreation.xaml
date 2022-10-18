@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SenkouCards"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="SenkouCards.CardCreation"
+    x:Class="SenkouCards.CardCreation"
         mc:Ignorable="d"
         Title="CardCreation" Height="450" Width="800">
   <Window.CommandBindings>
@@ -42,14 +41,17 @@
         <ComboBox Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged" />
         <ComboBox Name="cmbFontSize" Width="50" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged" />
       </ToolBar>
-      <RichTextBox DockPanel.Dock="Top" Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" Height="75" Margin="10,0,10,10"/>
+      <RichTextBox DockPanel.Dock="Top" Name="RtbFront" SelectionChanged="RtbFront_SelectionChanged" Height="75" Margin="10,0,10,10"/>
 
       <!-- Back -->
 
-      <RichTextBox DockPanel.Dock="Top" Name="rtbEditor2" SelectionChanged="rtbEditor_SelectionChanged" Height="75" Margin="10,10,10,10"/>
+      <RichTextBox DockPanel.Dock="Top" Name="RtbBack" SelectionChanged="RtbFront_SelectionChanged" Height="75" Margin="10,10,10,10"/>
+      <Label x:Name="label" DockPanel.Dock="Left" Content="Points:" Height="44" VerticalAlignment="Top" Margin="10,10,10,10"/>
+      <TextBox x:Name="TbxPoints" DockPanel.Dock="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Margin="10,10,10,10"/>
       <Button x:Name="btnUploadServer" DockPanel.Dock="Right" Content="Upload to Server" Height="25" VerticalAlignment="Top" Width="150" Margin="10,10,10,10" Click="btnUploadServer_Click"/>
       <Button x:Name="btnImportServer" DockPanel.Dock="Right" Content="Import from Server" Height="25" VerticalAlignment="Top" Width="150" Margin="400,10,10,10" Click="btnImportServer_Click"/>
-            
+
+
         </DockPanel>
   </Grid>
 </Window>

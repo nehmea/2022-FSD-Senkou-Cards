@@ -130,11 +130,12 @@
     <Compile Include="users.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
-
     <Compile Include="Validation.cs" />
-
+    <Page Include="CardCreation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WindowDeckInfo.xaml">
-
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,12 +206,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\" />
     <Content Include="SenkouDbContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SenkouDbContext.edmx</DependentUpon>
       <LastGenOutput>SenkouDbContext.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="SenkouDbContext.edmx.sql" />
     <Content Include="SenkouDbContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SenkouDbContext.edmx</DependentUpon>
@@ -219,6 +220,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
