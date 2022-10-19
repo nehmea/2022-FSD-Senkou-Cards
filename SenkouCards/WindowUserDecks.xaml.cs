@@ -92,6 +92,14 @@ namespace SenkouCards
         private void BtnDeckInfo_Click(object sender, RoutedEventArgs e)
         {
             attempts currentlySelectedAttempt = LvUserDecks.SelectedItem as attempts;
+            if (currentlySelectedAttempt == null || LvUserDecks.SelectedItems.Count > 1) return;
+
+            //List<responses> currentlySelectedResponses = Globals.SenkouDbAuto.responses.Where(response => response.attemptId == currentlySelectedAttempt.id).ToList();
+
+            WindowAttemptInfo newWindow = new WindowAttemptInfo(currentlySelectedAttempt.id);
+            newWindow.ShowDialog();
+            LvUserDecks.SelectedItem = null;
+            /*attempts currentlySelectedAttempt = LvUserDecks.SelectedItem as attempts;
             if (currentlySelectedAttempt == null) return;
             if (LvUserDecks.SelectedItems.Count > 1) return;
 
@@ -101,6 +109,7 @@ namespace SenkouCards
             DeckInfo newWindow = new DeckInfo(currentlySelectedDeck);
             newWindow.ShowDialog();
             LvUserDecks.SelectedItem = null;
+            */
         }
 
         /**

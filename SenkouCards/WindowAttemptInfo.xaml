@@ -4,15 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Loaded="Window_Loaded"
         Title="WindowAttemptInfo" Height="504" Width="538">
     <Grid Margin="0,0,10,0">
-        <ListView Name="LvAttemptInfo" Height="413" VerticalAlignment="Top" Margin="42,26,41,0" SelectionChanged="LvUserDecks_SelectionChanged" MouseDoubleClick="LvAttemptInfo_MouseDoubleClick" SelectionMode="Single" GridViewColumnHeader.Click="LvHeader_Click">
+        <ListView x:Name="LvResponses" Height="413" VerticalAlignment="Top" Margin="42,26,41,0" SelectionChanged="LvResponses_SelectionChanged" MouseDoubleClick="LvResponses_MouseDoubleClick" SelectionMode="Single" GridViewColumnHeader.Click="LvHeader_Click">
             <ListView.View>
-                <GridView x:Name="GvDecks">
-                    <!--
-                    <GridViewColumn Header="Deck Name" DisplayMemberBinding="{Binding decks.name}"></GridViewColumn>
-                    -->
+                <GridView x:Name="GvResponses">
+                    <GridViewColumn Header="Front" DisplayMemberBinding="{Binding cards.front}"></GridViewColumn>
+                    <GridViewColumn Header="Back" DisplayMemberBinding="{Binding cards.back}"></GridViewColumn>
+                    <GridViewColumn Header="Deck ID" DisplayMemberBinding="{Binding cards.deckId}"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
