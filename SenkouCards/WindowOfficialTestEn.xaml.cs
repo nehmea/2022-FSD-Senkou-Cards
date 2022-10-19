@@ -30,6 +30,7 @@ namespace SenkouCards
         List<cards> cardList = null;
         List<cards> dictionary = null;
         int unweightedScore = 0;
+        List<responses> response = new List <responses>();
         
         public WindowOfficialTestEn(decks passedDeck)
         {
@@ -77,6 +78,28 @@ namespace SenkouCards
         {
             SenkoucardsConfig Sc = new SenkoucardsConfig();
             int prevAttempts=(from a in Sc.attempts where a.deckId == currentDeck.id && a.userId == Globals.ActiveUser.id select a).Count();
+            decimal finalScore =
+                (prevAttempts == 0) ?
+                (decimal)unweightedScore :
+                (prevAttempts == 1) ?
+                (decimal)unweightedScore * (decimal)0.5 :
+                (prevAttempts == 2) ?
+                (decimal)unweightedScore * (decimal)0.25 :
+                -1;//DO NOT KEEP NEEDS TO BE 0
+            attempts attempt=new attempts { userId=Globals.ActiveUser.id,deckId=currentDeck.id,score=finalScore, attemptDate = DateTime.Now };
+            Sc.attempts.Add(attempt);
+
+            foreach(responses r in response)
+            {
+                r.attempts=attempt;
+                Sc.responses.Add(r);
+            }
+
+
+
+            users user=(from u in Sc.users where u.id == Globals.ActiveUser.id select u).FirstOrDefault<users>();
+            user.score= finalScore + Globals.ActiveUser.score;
+            Sc.SaveChanges();
         }
 
         private string sentenceAPI()
@@ -110,7 +133,22 @@ namespace SenkouCards
                 }
                 catch (Exception ex) when (ex is NullReferenceException)
                 {
-                    DrawCard();
+                    if (cardList.Count == 0)
+                    {
+                        TB_GeneratedSentence.Text = "No sentence could be generated for this word. Click finish to end the quiz.";
+                        //Disables buttons
+                        for(int i = 1; i <=4; i++)
+                        {
+                            var button =(Button)this.FindName("Btn_Ans" + i);
+                            button.IsEnabled = false;
+                        }
+                        Btn_Next.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        DrawCard();
+                    }
+                        
                 }
             }
 
@@ -199,44 +237,76 @@ namespace SenkouCards
         private void Btn_Ans1_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
-            if(button.Tag.ToString()=="Right")
+            responses resp = new responses { cardId = currentCard.id };
+
+            if (button.Tag.ToString()=="Right")
             {
                 unweightedScore += int.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
                 Lbl_Score.Content = Decimal.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
+                resp.isCorrectResponse = true;
             }
+            else
+            {
+                resp.isCorrectResponse = false;
+            }
+            response.Add(resp);
             AnswerSelected();
         }
 
         private void Btn_Ans2_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
+            responses resp = new responses { cardId = currentCard.id };
+
             if (button.Tag.ToString() == "Right")
             {
                 unweightedScore += int.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
                 Lbl_Score.Content = Decimal.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
+                resp.isCorrectResponse = true;
             }
+            else
+            {
+                resp.isCorrectResponse = false;
+            }
+            response.Add(resp);
             AnswerSelected();
         }
 
         private void Btn_Ans3_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
+            responses resp = new responses { cardId = currentCard.id };
+
             if (button.Tag.ToString() == "Right")
             {
                 unweightedScore += int.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
                 Lbl_Score.Content = Decimal.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
+                resp.isCorrectResponse = true;
             }
+            else
+            {
+                resp.isCorrectResponse = false;
+            }
+            response.Add(resp);
             AnswerSelected();
         }
 
         private void Btn_Ans4_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
+            responses resp= new responses { cardId=currentCard.id };
+
             if (button.Tag.ToString() == "Right")
             {
                 unweightedScore += int.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
                 Lbl_Score.Content = Decimal.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
+                resp.isCorrectResponse = true;
             }
+            else
+            {
+                resp.isCorrectResponse = false;
+            }
+            response.Add(resp);
             AnswerSelected();
         }
 
@@ -252,7 +322,19 @@ namespace SenkouCards
             //Hide ShowAnswer and Next Button
             Btn_ShowAns.Visibility = Visibility.Hidden;
             Btn_Next.Visibility = Visibility.Hidden;
-            DrawCard();
+
+            Button nextButton = sender as Button;
+            //More efficient than calling DrawCard and letting ReadCard handle the condition that CardList.Count=0 (since it then goes on to call sentenceAPI which will 100% throw an unnecessary error)
+            if(nextButton.Content.ToString()=="Finish")
+            {
+                RegisterAttempt();
+                this.Close();
+            }
+            else
+            {
+                DrawCard();
+            }
+            
         }
     }
 }
