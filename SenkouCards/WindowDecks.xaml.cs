@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -92,7 +91,28 @@ namespace SenkouCards
          */
         private void BtnExportDeck_Click(object sender, RoutedEventArgs e)
         {
-            SaveToCSV();
+            //SaveToCSV();
+            decks currentlySelectedDeck = LvDecks.SelectedItem as decks;
+            if (currentlySelectedDeck == null || LvDecks.SelectedItems.Count > 1) return;
+
+            int deckId = currentlySelectedDeck.id;
+
+            List<cards> cardsList = Globals.SenkouDbAuto.cards
+                .Where(card => card.deckId == deckId)
+                .ToList();
+
+            List<string> excluded = new List<string>() { "responses", "decks", "cardsAudios", "cardsImages" };
+
+            try
+            {
+                Globals.SaveToCSV<cards>(excluded, cardsList);
+                MessageBox.Show(this, "Export complete!", "Export Status", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex) when (ex is IOException || ex is SystemException)
+            {
+                MessageBox.Show(this, "Export failed\n" + ex.Message, "Export Status", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private void BtnViewUserDecks_Click(object sender, RoutedEventArgs e)
@@ -118,12 +138,13 @@ namespace SenkouCards
         private void setButtonsStatus()
         {
             decks currentlySelectedDeck = LvDecks.SelectedItem as decks;
-            BtnViewUserDecks.IsEnabled = (Globals.ActiveUser != null);
+            //BtnViewUserDecks.IsEnabled = (Globals.ActiveUser != null);
             BtnCreateDeck.IsEnabled = (Globals.ActiveUser != null);
             BtnExportDeck.IsEnabled = (currentlySelectedDeck != null && LvDecks.SelectedItems.Count == 1);
             BtnDeckInfo.IsEnabled = (currentlySelectedDeck != null && LvDecks.SelectedItems.Count == 1);
         }
 
+        /*
         private void SaveToCSV()
         {
             decks currentlySelectedDeck = LvDecks.SelectedItem as decks;
@@ -159,6 +180,6 @@ namespace SenkouCards
                     MessageBox.Show(this, "Export failed\n" + ex.Message, "Export Status", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-        }
+        }*/
     }
 }

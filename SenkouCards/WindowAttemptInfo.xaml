@@ -1,0 +1,22 @@
+﻿<Window x:Class="SenkouCards.WindowAttemptInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SenkouCards"
+        mc:Ignorable="d" Loaded="Window_Loaded"
+        Title="WindowAttemptInfo" Height="504" Width="538">
+    <Grid Margin="0,0,10,0">
+        <ListView x:Name="LvResponses" Height="413" VerticalAlignment="Top" Margin="42,26,41,0" SelectionChanged="LvResponses_SelectionChanged" MouseDoubleClick="LvResponses_MouseDoubleClick" SelectionMode="Single" GridViewColumnHeader.Click="LvHeader_Click">
+            <ListView.View>
+                <GridView x:Name="GvResponses">
+                    <GridViewColumn Header="Front" DisplayMemberBinding="{Binding cards.front}"></GridViewColumn>
+                    <GridViewColumn Header="Back" DisplayMemberBinding="{Binding cards.back}"></GridViewColumn>
+                    <GridViewColumn Header="Deck ID" DisplayMemberBinding="{Binding cards.deckId}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="BtnDeckInfo" Content="Deck info" HorizontalAlignment="Left" Margin="301,452,0,0" VerticalAlignment="Top" Width="112" Click="BtnDeckInfo_Click"/>
+        <Button x:Name="BtnExportResponses" Content="Export a Deck" HorizontalAlignment="Left" Margin="112,452,0,0" VerticalAlignment="Top" Width="112" Click="BtnExportResponses_Click"/>
+    </Grid>
+</Window>
