@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +26,7 @@ namespace SenkouCards
                 Globals.ActiveUser = Globals.SenkouDbAuto.users.Find(2);
             }
         }
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -56,6 +58,16 @@ namespace SenkouCards
          */
         private void LvUserDecks_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            attempts currentlySelectedAttempt = LvUserDecks.SelectedItem as attempts;
+            if (currentlySelectedAttempt == null) return;
+            if (LvUserDecks.SelectedItems.Count > 1) return;
+
+            int deckId = currentlySelectedAttempt.deckId;
+            decks currentlySelectedDeck = Globals.SenkouDbAuto.decks.Find(deckId);
+
+            DeckInfo newWindow = new DeckInfo(currentlySelectedDeck);
+            newWindow.ShowDialog();
+            LvUserDecks.SelectedItem = null;
         }
 
         /**
@@ -79,7 +91,16 @@ namespace SenkouCards
          */
         private void BtnDeckInfo_Click(object sender, RoutedEventArgs e)
         {
+            attempts currentlySelectedAttempt = LvUserDecks.SelectedItem as attempts;
+            if (currentlySelectedAttempt == null) return;
+            if (LvUserDecks.SelectedItems.Count > 1) return;
 
+            int deckId = currentlySelectedAttempt.deckId;
+            decks currentlySelectedDeck = Globals.SenkouDbAuto.decks.Find(deckId);
+
+            DeckInfo newWindow = new DeckInfo(currentlySelectedDeck);
+            newWindow.ShowDialog();
+            LvUserDecks.SelectedItem = null;
         }
 
         /**
@@ -87,7 +108,26 @@ namespace SenkouCards
          */
         private void BtnExportDeck_Click(object sender, RoutedEventArgs e)
         {
+            attempts currentlySelectedAttempt = LvUserDecks.SelectedItem as attempts;
+            if (currentlySelectedAttempt == null || LvUserDecks.SelectedItems.Count > 1) return;
 
+            int deckId = currentlySelectedAttempt.deckId;
+
+            List<cards> cardsList = Globals.SenkouDbAuto.cards
+                .Where(card => card.deckId == deckId)
+                .ToList();
+
+            List<string> excluded = new List<string>() { "responses", "decks", "cardsAudios", "cardsImages" };
+
+            try
+            {
+                Globals.SaveToCSV<cards>(excluded, cardsList);
+                MessageBox.Show(this, "Export complete!", "Export Status", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex) when (ex is IOException || ex is SystemException)
+            {
+                MessageBox.Show(this, "Export failed\n" + ex.Message, "Export Status", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void LvHeader_Click(object sender, RoutedEventArgs e)
@@ -154,7 +194,7 @@ namespace SenkouCards
         }
         private void setButtonsStatus()
         {
-            decks currentlySelectedDeck = LvUserDecks.SelectedItem as decks;
+            attempts currentlySelectedDeck = LvUserDecks.SelectedItem as attempts;
             BtnCreateDeck.IsEnabled = (Globals.ActiveUser != null);
             BtnExportDeck.IsEnabled = (currentlySelectedDeck != null && LvUserDecks.SelectedItems.Count == 1);
             BtnDeckInfo.IsEnabled = (currentlySelectedDeck != null && LvUserDecks.SelectedItems.Count == 1);
