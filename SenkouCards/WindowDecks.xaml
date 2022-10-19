@@ -7,7 +7,7 @@
         mc:Ignorable="d" Loaded="Window_Loaded"
         Title="Decks" Height="570" Width="554">
     <Grid Margin="0,0,10,0">
-        <ListView Name="LvDecks" Height="388" VerticalAlignment="Top" Margin="44,92,39,0" SelectionChanged="LvUserDecks_SelectionChanged" MouseDoubleClick="LvUserDecks_MouseDoubleClick" SelectionMode="Extended">
+        <ListView Name="LvDecks" Height="388" VerticalAlignment="Top" Margin="44,92,39,0" SelectionChanged="LvUserDecks_SelectionChanged" MouseDoubleClick="LvUserDecks_MouseDoubleClick" SelectionMode="Extended" GridViewColumnHeader.Click="LvHeader_Click">
             <ListView.View>
                 <GridView x:Name="GvDecks">
                     <!--

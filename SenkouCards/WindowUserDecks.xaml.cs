@@ -167,7 +167,7 @@ namespace SenkouCards
                 var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding; // get the binding of the clicked column
                 var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string; // get the first not null value of binding path or column header
 
-                Sort(sortBy, direction, LvUserDecks); //sort 
+                Globals.Sort(sortBy, direction, LvUserDecks); //sort 
 
 
                 _lastHeaderClicked = headerClicked;
@@ -175,16 +175,6 @@ namespace SenkouCards
             }
         }
 
-        private void Sort(string sortBy, ListSortDirection direction, ListView LvFoo)
-        {
-            ICollectionView dataView =
-              CollectionViewSource.GetDefaultView(LvFoo.ItemsSource);
-
-            dataView.SortDescriptions.Clear();
-            SortDescription sd = new SortDescription(sortBy, direction);
-            dataView.SortDescriptions.Add(sd);
-            dataView.Refresh();
-        }
 
         private void TbxSearchDecks_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -199,7 +189,6 @@ namespace SenkouCards
                     .Include("decks")
                     .Where(attempt => attempt.userId == Globals.ActiveUser.id && attempt.decks.name.Contains(searchString))
                     .ToList();
-
             }
 
         }
