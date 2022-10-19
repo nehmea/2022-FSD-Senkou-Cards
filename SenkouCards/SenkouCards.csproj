@@ -118,8 +118,8 @@
     <Compile Include="cardsImages.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="CardViewAll.xaml.cs">
-      <DependentUpon>CardViewAll.xaml</DependentUpon>
+    <Compile Include="WindowCardViewAll.xaml.cs">
+      <DependentUpon>WindowCardViewAll.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowAttemptInfo.xaml.cs">
       <DependentUpon>WindowAttemptInfo.xaml</DependentUpon>
@@ -173,7 +173,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CardViewAll.xaml">
+    <Page Include="WindowCardViewAll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

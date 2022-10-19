@@ -17,16 +17,20 @@ namespace SenkouCards
     /// <summary>
     /// Interaction logic for Window2.xaml
     /// </summary>
-    public partial class Window2 : Window
+    public partial class CardViewAll : Window
     {
-        public Window2()
+        decks currentDeck = null;
+        public CardViewAll(decks passedDeck)
         {
             InitializeComponent();
+            currentDeck = passedDeck;
         }
 
         private void BtnCreateCard_Click(object sender, RoutedEventArgs e)
         {
-
+            CardCreation cardCreation = new CardCreation();
+            this.Close();
+            cardCreation.Show();
         }
 
         private void BtnDeleteCard_Click(object sender, RoutedEventArgs e)
@@ -37,6 +41,22 @@ namespace SenkouCards
         private void TbxSearchCards_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void LvUserCards_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void LvUserCards_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (currentDeck == null) return;
+            
         }
     }
 }

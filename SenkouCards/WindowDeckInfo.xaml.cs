@@ -33,7 +33,9 @@ namespace SenkouCards
 
         private void Btn_Edit_Click(object sender, RoutedEventArgs e)
         {
-
+            CardViewAll cardViewAll = new CardViewAll(currentDeck);
+            this.Close();
+            cardViewAll.Show();
         }
     }
 }

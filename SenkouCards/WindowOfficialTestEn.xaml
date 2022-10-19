@@ -5,22 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
         mc:Ignorable="d"
-        Title="WindowOfficialTestEn" Height="471" Width="404" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="WindowOfficialTestEn" Height="471" Width="425.518" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
         <Label x:Name="Lbl_DeckName" Content="" HorizontalAlignment="Center" Margin="0,45,0,0" VerticalAlignment="Top" />
         <Label x:Name="Lbl_GeneratedSentence" HorizontalAlignment="Left" Margin="32,109,0,0" VerticalAlignment="Top" Height="119" Width="349" BorderBrush="Black" BorderThickness="1">
             <TextBlock x:Name="TB_GeneratedSentence" TextWrapping="Wrap" Width="339" Height="109">
-                
+
             </TextBlock>
         </Label>
         <Button x:Name="Btn_Ans1" Content="Answer 1" HorizontalAlignment="Left" Margin="57,261,0,0" VerticalAlignment="Top" Height="42" Width="105" Click="Btn_Ans1_Click" />
         <Button x:Name="Btn_Ans2" Content="Answer 2" HorizontalAlignment="Left" Margin="248,261,0,0" VerticalAlignment="Top" Height="42" Width="105" Click="Btn_Ans2_Click" />
         <Button x:Name="Btn_Ans3" Content="Answer 3" HorizontalAlignment="Left" Margin="57,318,0,0" VerticalAlignment="Top" Height="42" Width="105" Click="Btn_Ans3_Click" />
         <Button x:Name="Btn_Ans4" Content="Answer 4" HorizontalAlignment="Left" Margin="248,318,0,0" VerticalAlignment="Top" Height="42" Width="105" Click="Btn_Ans4_Click" />
-        <Button Content="Show Answer" HorizontalAlignment="Left" Margin="32,402,0,0" VerticalAlignment="Top" Width="85"/>
-        <Button Content="Abort Attempt" HorizontalAlignment="Center" Margin="0,402,0,0" VerticalAlignment="Top" Width="84"/>
-        <Button Content="Next" HorizontalAlignment="Left" Margin="296,402,0,0" VerticalAlignment="Top" Width="85"/>
-        
+        <Button Content="Show Answer" HorizontalAlignment="Left" Margin="10,400,0,0" VerticalAlignment="Top" Width="130"/>
+        <Button Content="Abort Attempt" HorizontalAlignment="Center" Margin="171,400,121,0" VerticalAlignment="Top" Width="128"/>
+        <Button Content="Next" HorizontalAlignment="Left" Margin="325,400,0,0" VerticalAlignment="Top" Width="85"/>
+
         <Label Content="Score:" HorizontalAlignment="Left" Margin="18,22,0,0" VerticalAlignment="Top"/>
         <Label x:Name="Lbl_Score" Content="0" HorizontalAlignment="Left" Margin="60,22,0,0" VerticalAlignment="Top"/>
     </Grid>
