@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static System.Net.WebRequestMethods;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace SenkouCards
 {
@@ -28,7 +29,8 @@ namespace SenkouCards
         cards currentCard = null;
         List<cards> cardList = null;
         List<cards> dictionary = null;
-        int score = 0;
+        int unweightedScore = 0;
+        
         public WindowOfficialTestEn(decks passedDeck)
         {
             currentDeck = passedDeck;
@@ -38,46 +40,78 @@ namespace SenkouCards
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Random rdm=new Random();
-            cardList = dictionary =currentDeck.cards.OrderBy(card => rdm.Next()).ToList();
+            cardList=currentDeck.cards.OrderBy(card => rdm.Next()).ToList();
+            dictionary = currentDeck.cards.ToList();
+            DrawCard();
+            Lbl_DeckName.Content = currentDeck.name;
+        }
+        private void DrawCard()
+        {
             readCard();
             sentenceAPI();
             randomizeButtons();
-            Lbl_DeckName.Content = currentDeck.name;
         }
-
         private void readCard()
         {
-            currentCard = cardList[0];
-            cardList.RemoveAt(0);
+            if (cardList.Count > 1)
+            {
+                currentCard = cardList[0];
+                cardList.RemoveAt(0);
+            }
+            else if(cardList.Count == 1)
+            {
+                Btn_Next.Background = Brushes.Green;
+                Btn_Next.Content = "Finish";
+                currentCard = cardList[0];
+                cardList.RemoveAt(0);
+            }
+            else
+            {
+                RegisterAttempt();
+                this.Close();
+            }
+                
+        }
+
+        private void RegisterAttempt()
+        {
+            SenkoucardsConfig Sc = new SenkoucardsConfig();
+            int prevAttempts=(from a in Sc.attempts where a.deckId == currentDeck.id && a.userId == Globals.ActiveUser.id select a).Count();
         }
 
         private string sentenceAPI()
         {
             using (var client = new HttpClient())
             {
-                string currWord = currentCard.front.ToLower();
+                try
+                {
+                    string currWord = currentCard.front.ToLower();
 
-                string uri = "https://od-api.oxforddictionaries.com/api/v2/sentences/en-us/" + currWord;
+                    string uri = "https://od-api.oxforddictionaries.com/api/v2/sentences/en-us/" + currWord;
 
-                var appSettings = ConfigurationManager.AppSettings;
-                string key = appSettings["OX_API_KEY"];
-                string id = appSettings["OX_API_ID"];
+                    var appSettings = ConfigurationManager.AppSettings;
+                    string key = appSettings["OX_API_KEY"];
+                    string id = appSettings["OX_API_ID"];
 
-                client.DefaultRequestHeaders.Add("app_id", id);
-                client.DefaultRequestHeaders.Add("app_key", key);
-                var endpoint = new Uri(uri);
-                
+                    client.DefaultRequestHeaders.Add("app_id", id);
+                    client.DefaultRequestHeaders.Add("app_key", key);
+                    var endpoint = new Uri(uri);
 
-                var result = client.GetAsync(endpoint).Result;
-                string json = result.Content.ReadAsStringAsync().Result;
 
-                var jo = JObject.Parse(json);
-                string sentence = jo["results"][0]["lexicalEntries"][0]["sentences"][0]["text"].ToString();
+                    var result = client.GetAsync(endpoint).Result;
+                    string json = result.Content.ReadAsStringAsync().Result;
 
-                string blankedSentence = sentence.Replace(currWord, "______");
+                    var jo = JObject.Parse(json);
+                    string sentence = jo["results"][0]["lexicalEntries"][0]["sentences"][0]["text"].ToString(); //NullReferenceException
 
-                Lbl_GeneratedSentence.Content=blankedSentence;
+                    string blankedSentence = censorWord(sentence, currWord);
 
+                    TB_GeneratedSentence.Text = blankedSentence;
+                }
+                catch (Exception ex) when (ex is NullReferenceException)
+                {
+                    DrawCard();
+                }
             }
 
 
@@ -91,6 +125,7 @@ namespace SenkouCards
 
             string answerString = currentCard.front;
             string wrongAnswer;
+            string wrongAnswersUsed = "";
 
             int numOfWords=dictionary.Count();
             string [] choices=new string[4]; 
@@ -109,8 +144,9 @@ namespace SenkouCards
                     do
                     {
                         wrongAnswer = dictionary[rand.Next(numOfWords)].front;
-                    } while (wrongAnswer == answerString);
-
+                        
+                    } while (wrongAnswer == answerString || wrongAnswersUsed.Contains(wrongAnswer));
+                    wrongAnswersUsed += wrongAnswer;//ensures that no two buttons have the same wrong answer
                     button.Content = wrongAnswer;
                     button.Tag = "Wrong";
                 }
@@ -118,13 +154,57 @@ namespace SenkouCards
 
         }
 
+        //This function covers edge cases where a sentence might have a modified form of the word (e.g. word is embarrass, but the sentence uses embarrassed) 
+        public static string censorWord(string sentence, string censoredWord)
+        {
+            //string result = null;
+            //string[] splits = sentence.Split(' ');
+            //for (int i = 0; i < splits.Length; i++)
+            //{
+            //    if (splits[i].Contains(censoredWord))
+            //    {
+            //        splits[i] = "______";
+            //    }
+
+            //    result += splits[i] + " ";
+            //}
+            //    return result;
+            
+            return sentence.Replace(censoredWord, "______");
+
+            
+        }
+
+        private void AnswerSelected()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                var button = (Button)this.FindName("Btn_Ans" + (i + 1));
+
+                if (button.Tag.ToString()=="Right")
+                {
+                    button.Background = Brushes.Green;
+                    button.Tag = "Right";
+                }
+                else
+                {
+                    button.Background = Brushes.Red;
+                }
+                button.IsEnabled = false;
+            }
+            Btn_ShowAns.Visibility = Visibility.Visible;
+            Btn_Next.Visibility = Visibility.Visible;
+        }
+
         private void Btn_Ans1_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
             if(button.Tag.ToString()=="Right")
             {
+                unweightedScore += int.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
                 Lbl_Score.Content = Decimal.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
             }
+            AnswerSelected();
         }
 
         private void Btn_Ans2_Click(object sender, RoutedEventArgs e)
@@ -132,8 +212,10 @@ namespace SenkouCards
             Button button = sender as Button;
             if (button.Tag.ToString() == "Right")
             {
+                unweightedScore += int.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
                 Lbl_Score.Content = Decimal.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
             }
+            AnswerSelected();
         }
 
         private void Btn_Ans3_Click(object sender, RoutedEventArgs e)
@@ -141,8 +223,10 @@ namespace SenkouCards
             Button button = sender as Button;
             if (button.Tag.ToString() == "Right")
             {
+                unweightedScore += int.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
                 Lbl_Score.Content = Decimal.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
             }
+            AnswerSelected();
         }
 
         private void Btn_Ans4_Click(object sender, RoutedEventArgs e)
@@ -150,8 +234,25 @@ namespace SenkouCards
             Button button = sender as Button;
             if (button.Tag.ToString() == "Right")
             {
+                unweightedScore += int.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
                 Lbl_Score.Content = Decimal.Parse(Lbl_Score.Content.ToString()) + currentCard.points;
             }
+            AnswerSelected();
+        }
+
+        private void Btn_Next_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                var button = (Button)this.FindName("Btn_Ans" + (i + 1));
+                button.ClearValue(TagProperty);
+                button.ClearValue(Button.BackgroundProperty);
+                button.IsEnabled = true;
+            }
+            //Hide ShowAnswer and Next Button
+            Btn_ShowAns.Visibility = Visibility.Hidden;
+            Btn_Next.Visibility = Visibility.Hidden;
+            DrawCard();
         }
     }
 }

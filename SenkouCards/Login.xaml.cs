@@ -15,10 +15,10 @@ namespace SenkouCards
             InitializeComponent();
             Lbl_RegistrationMessage.Content = registerSuccess;
         }
-        public Login()
-        {
-            InitializeComponent();
-        }
+        //public Login()
+        //{
+        //    InitializeComponent();
+        //}
 
         private void Btn_Login_Click(object sender, RoutedEventArgs e)
         {
