@@ -26,7 +26,7 @@
                 <TextBlock Name="TblDescription" Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. " FontSize="16" Grid.Row="2" Grid.Column="1" TextAlignment="Justify" TextWrapping="Wrap" Padding="5,5,10,5"></TextBlock>
             </Grid>
         </Border>
-        <Button Content="Edit" HorizontalAlignment="Left" Margin="49,490,0,0" VerticalAlignment="Top" Width="121" Height="27"/>
+        <Button Content="Edit" HorizontalAlignment="Left" Margin="49,490,0,0" VerticalAlignment="Top" Width="121" Height="27" Click="Btn_Edit_Click"/>
         <Button x:Name="Btn_Attempt" Content="Attempt" HorizontalAlignment="Center" Margin="0,490,0,0" VerticalAlignment="Top" Width="120" Height="27" Click="Btn_Attempt_Click"  />
         <Button Content="History" HorizontalAlignment="Left" Margin="355,490,0,0" VerticalAlignment="Top" Width="120" Height="27"/>
 

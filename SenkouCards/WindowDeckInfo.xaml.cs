@@ -30,5 +30,10 @@ namespace SenkouCards
             this.Close();
             windowOfficialTestEn.Show();
         }
+
+        private void Btn_Edit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -1,16 +1,14 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Text.RegularExpressions;
-using System;
-using System.Drawing.Imaging;
-using System.Text;
 
 namespace SenkouCards
 {
@@ -57,8 +55,10 @@ namespace SenkouCards
         //Also optional
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter = "Rich Text Format (*.rtf)|*.rtf|All files (*.*)|*.*";
+            SaveFileDialog dlg = new SaveFileDialog
+            {
+                Filter = "Rich Text Format (*.rtf)|*.rtf|All files (*.*)|*.*"
+            };
             if (dlg.ShowDialog() == true)
             {
                 FileStream fileStream = new FileStream(dlg.FileName, FileMode.Create);
@@ -67,50 +67,68 @@ namespace SenkouCards
             }
         }
         private byte[] _imageBytes = null;
-        private void btnUploadImage_Click(object sender, RoutedEventArgs e)
+        private void BtnUploadImage_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: EXCEPTIONS
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Image files (*.jpg;*.png;*.jpeg)|*.jpg;*.png;*.jpeg;|All Files (*.*)|*.*";
-            dlg.RestoreDirectory = true;
-            if (dlg.ShowDialog() == true)
+            try
             {
-                string selectedImageName = dlg.FileName;
-                TbxImagePath.Text = selectedImageName;
-                
-                using (var fs = new FileStream(selectedImageName, FileMode.Open, FileAccess.Read))
+                //TODO: EXCEPTIONS
+                OpenFileDialog dlg = new OpenFileDialog
                 {
-                    _imageBytes = new byte[fs.Length];
-                    fs.Read(_imageBytes, 0, Convert.ToInt32(fs.Length));
+                    Filter = "Image files (*.jpg;*.png;*.jpeg)|*.jpg;*.png;*.jpeg;|All Files (*.*)|*.*",
+                    RestoreDirectory = true
+                };
+                if (dlg.ShowDialog() == true)
+                {
+                    string selectedImageName = dlg.FileName;
+                    TbxImagePath.Text = selectedImageName;
+
+                    using (var fs = new FileStream(selectedImageName, FileMode.Open, FileAccess.Read))  //IOException, ArgumentException, UnauthorizedAccessException
+                    {
+                        _imageBytes = new byte[fs.Length];
+                        fs.Read(_imageBytes, 0, Convert.ToInt32(fs.Length));
+                    }
                 }
+
+            }
+            catch (Exception ex) when (ex is IOException || ex is ArgumentException || ex is UnauthorizedAccessException)
+            {
+                MessageBox.Show(this, "Image upload failed\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
 
 
         private byte[] _audioBytes = null;
-        private void btnUploadAudio_Click(object sender, RoutedEventArgs e)
+        private void BtnUploadAudio_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: EXCEPTIONS
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Audio files (*.mp3;*.m4a;*.flac;*.wav)|*.mp3;*.m4a;*.flac;*.wav;|All Files (*.*)|*.*";
-            dlg.RestoreDirectory = true;
-            if (dlg.ShowDialog() == true)
+            try
             {
-                string selectedAudioName = dlg.FileName;
-                TbxAudioPath.Text = selectedAudioName;
-
-                using (var fs = new FileStream(selectedAudioName, FileMode.Open, FileAccess.Read))
+                //TODO: EXCEPTIONS
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.Filter = "Audio files (*.mp3;*.m4a;*.flac;*.wav)|*.mp3;*.m4a;*.flac;*.wav;|All Files (*.*)|*.*";
+                dlg.RestoreDirectory = true;
+                if (dlg.ShowDialog() == true)
                 {
-                    _audioBytes = new byte[fs.Length];
-                    fs.Read(_audioBytes, 0, Convert.ToInt32(fs.Length));
+                    string selectedAudioName = dlg.FileName;
+                    TbxAudioPath.Text = selectedAudioName;
+
+                    using (var fs = new FileStream(selectedAudioName, FileMode.Open, FileAccess.Read))
+                    {
+                        _audioBytes = new byte[fs.Length];
+                        fs.Read(_audioBytes, 0, Convert.ToInt32(fs.Length));
+                    }
+
                 }
 
+            }
+            catch (Exception ex) when (ex is IOException || ex is ArgumentException || ex is UnauthorizedAccessException)
+            {
+                MessageBox.Show(this, "Image upload failed\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
 
-        private void cmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cmbFontFamily.SelectedItem != null)
                 RtbFront.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, cmbFontFamily.SelectedItem);
@@ -128,62 +146,79 @@ namespace SenkouCards
             }
         }
 
-        private void btnUploadServer_Click(object sender, RoutedEventArgs e)
+        private void BtnUploadServer_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: EXCEPTIONS
-
-            //Front
-            string frontText;
-            TextRange tr = new TextRange(RtbFront.Document.ContentStart, RtbFront.Document.ContentEnd);
-            using (MemoryStream ms = new MemoryStream())
+            try
             {
-                tr.Save(ms, DataFormats.Rtf);
-                frontText = Encoding.ASCII.GetString(ms.ToArray());
-            }
-            
-            //Back
-            string backText;
-            TextRange tr2 = new TextRange(RtbBack.Document.ContentStart, RtbBack.Document.ContentEnd);
-            using (MemoryStream ms = new MemoryStream())
-            {
-                tr2.Save(ms, DataFormats.Rtf);
-                backText = Encoding.ASCII.GetString(ms.ToArray());
-            }
+                //TODO: EXCEPTIONS
 
-            //Points
-            //Numbers only exception and validation: TODO
-            int.TryParse(TbxPoints.Text, out int points);
-            cards newCard = new cards { front = frontText, back = backText, points = points };
-            
-            dbContext.cards.Add(newCard);
-            dbContext.SaveChanges();
-
-            //Image
-            if (!String.IsNullOrEmpty(TbxImagePath.Text))
-            {
-                var db = new SenkoucardsConfig();
-                var cardsImages = new cardsImages()
+                //Front
+                string frontText;
+                TextRange tr = new TextRange(RtbFront.Document.ContentStart, RtbFront.Document.ContentEnd); // ArgumentException
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    cardId = newCard.id,
-                    image = _imageBytes
-                };
-            }
-            //Audio
-            if (!String.IsNullOrEmpty(TbxAudioPath.Text))
-            {
-                var db = new SenkoucardsConfig();
-                var cardsAudio = new cardsAudios()
+                    tr.Save(ms, DataFormats.Rtf);
+                    frontText = Encoding.ASCII.GetString(ms.ToArray());
+                }
+
+                //Back
+                string backText;
+                TextRange tr2 = new TextRange(RtbBack.Document.ContentStart, RtbBack.Document.ContentEnd);  //ArgumentException
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    cardId = newCard.id,
-                    audio = _audioBytes
-                };
+                    tr2.Save(ms, DataFormats.Rtf);
+                    backText = Encoding.ASCII.GetString(ms.ToArray());
+                }
+
+                //Points
+                //Numbers only exception and validation: TODO
+                int.TryParse(TbxPoints.Text, out int points);
+                cards newCard = new cards { front = frontText, back = backText, points = points };
+
+                dbContext.cards.Add(newCard);
+                dbContext.SaveChanges();
+
+                //Image
+                if (!String.IsNullOrEmpty(TbxImagePath.Text))
+                {
+                    var db = new SenkoucardsConfig();
+                    var cardsImages = new cardsImages()
+                    {
+                        cardId = newCard.id,
+                        image = _imageBytes
+                    };
+                }
+                //Audio
+                if (!String.IsNullOrEmpty(TbxAudioPath.Text))
+                {
+                    var db = new SenkoucardsConfig();
+                    var cardsAudio = new cardsAudios()
+                    {
+                        cardId = newCard.id,
+                        audio = _audioBytes
+                    };
+                }
+
             }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(this, "Invalid info uploaded\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            ResetFields();
 
 
         }
-        private void btnImportServer_Click(object sender, RoutedEventArgs e)
+        private void BtnImportServer_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void ResetFields()
+        {
+            TbxAudioPath.Text = "";
+            TbxImagePath.Text = "";
+            RtbFront.Document.Blocks.Clear();
+            RtbBack.Document.Blocks.Clear();
+            TbxPoints.Text = "";
         }
 
     }
