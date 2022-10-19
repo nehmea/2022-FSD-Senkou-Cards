@@ -31,6 +31,7 @@ namespace SenkouCards
         List<cards> dictionary = null;
         int unweightedScore = 0;
         List<responses> response = new List <responses>();
+        bool cleanClose = false;
         
         public WindowOfficialTestEn(decks passedDeck)
         {
@@ -69,6 +70,7 @@ namespace SenkouCards
             else
             {
                 RegisterAttempt();
+                cleanClose = true;
                 this.Close();
             }
                 
@@ -85,12 +87,13 @@ namespace SenkouCards
                 (decimal)unweightedScore * (decimal)0.5 :
                 (prevAttempts == 2) ?
                 (decimal)unweightedScore * (decimal)0.25 :
-                -1;//DO NOT KEEP NEEDS TO BE 0
+                0;
             attempts attempt=new attempts { userId=Globals.ActiveUser.id,deckId=currentDeck.id,score=finalScore, attemptDate = DateTime.Now };
             Sc.attempts.Add(attempt);
 
             foreach(responses r in response)
             {
+
                 r.attempts=attempt;
                 Sc.responses.Add(r);
             }
@@ -328,11 +331,37 @@ namespace SenkouCards
             if(nextButton.Content.ToString()=="Finish")
             {
                 RegisterAttempt();
+                cleanClose = true;
                 this.Close();
             }
             else
             {
                 DrawCard();
+            }
+            
+        }
+
+        private void Btn_Abort_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(!cleanClose)
+            {
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to abort this deck? Doing so will still count as an attempt", "SenkouCards - Abort", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        RegisterAttempt();
+                    }
+                    else
+                    {
+                        cleanClose = false;
+                        e.Cancel = true;
+                    }
+
+
             }
             
         }

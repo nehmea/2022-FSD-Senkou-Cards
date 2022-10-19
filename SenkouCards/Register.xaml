@@ -14,8 +14,8 @@
         <PasswordBox x:Name="Pbx_Password" HorizontalAlignment="Center" Margin="0,113,0,0" VerticalAlignment="Top" Width="208"/>
         <Label Content="Confirm Password:" HorizontalAlignment="Left" Margin="12,136,0,0" VerticalAlignment="Top"/>
         <PasswordBox x:Name="Pbx_ConfirmPass" HorizontalAlignment="Center" Margin="0,162,0,0" VerticalAlignment="Top" Width="208"/>
-        <Button x:Name="Btn_Register" Content="Register" HorizontalAlignment="Left" Margin="46,220,0,0" VerticalAlignment="Top" Height="36" Width="80" Click="Btn_Register_Click"/>
-        <Button x:Name="Btn_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="174,220,0,0" VerticalAlignment="Top" Height="35" Width="80" Click="Btn_Cancel_Click" />
+        <Button x:Name="Btn_Register" Content="Register" HorizontalAlignment="Left" Margin="25,219,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Btn_Register_Click"/>
+        <Button x:Name="Btn_Cancel" Content="Cancel" Margin="175,219,25,0" VerticalAlignment="Top" Height="35" Click="Btn_Cancel_Click" />
         <Label x:Name="Lbl_ValidationErr" Content="" HorizontalAlignment="Left" Margin="47,185,0,0" VerticalAlignment="Top" Foreground="Red"/>
 
 

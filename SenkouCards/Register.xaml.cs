@@ -20,8 +20,10 @@ namespace SenkouCards
     /// </summary>
     public partial class Register : Window
     {
-        public Register()
+        Login login;
+        public Register(Login log=null)
         {
+            login = log;
             InitializeComponent();
         }
 
@@ -48,8 +50,11 @@ namespace SenkouCards
                 Sc.SaveChanges();
 
                 this.DialogResult = true;
-                Login login = new Login("Successfully Registered!");
-                login.ShowDialog();
+
+                //Login login = new Login("Successfully Registered!");
+                login.Lbl_RegistrationMessage.Content = "Successfully Registered";
+                login.Lbl_RegistrationMessage.Foreground = new SolidColorBrush(Colors.Green);
+                
             }
             catch (ArgumentException ex)
             {
@@ -73,8 +78,6 @@ namespace SenkouCards
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
-            Login login = new Login();
-            login.ShowDialog();
         }
     }
 }

@@ -5,23 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
         mc:Ignorable="d"
-        Title="WindowOfficialTestEn" Height="514" Width="404" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
-    <Grid>
+        Title="WindowOfficialTestEn" Height="602" Width="470" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing" >
+    <Grid HorizontalAlignment="Center" Width="470">
         <Label x:Name="Lbl_DeckName" Content="" HorizontalAlignment="Center" Margin="0,45,0,0" VerticalAlignment="Top" />
-        <Label x:Name="Lbl_GeneratedSentence" HorizontalAlignment="Left" Margin="32,109,0,0" VerticalAlignment="Top" Height="119" Width="349" BorderBrush="Black" BorderThickness="1">
-            <TextBlock x:Name="TB_GeneratedSentence" TextWrapping="Wrap" Width="339" Height="109">
-                
+        <Label x:Name="Lbl_GeneratedSentence" HorizontalAlignment="Center" Margin="0,109,0,0" VerticalAlignment="Top" Height="119" Width="394" BorderBrush="Black" BorderThickness="1">
+            <TextBlock x:Name="TB_GeneratedSentence" TextWrapping="Wrap" Width="384" Height="109" FontSize="25"  >
+
             </TextBlock>
         </Label>
-        <Button x:Name="Btn_Ans1" Content="Answer 1" HorizontalAlignment="Left" Margin="57,261,0,0" VerticalAlignment="Top" Height="42" Width="105" Click="Btn_Ans1_Click" />
-        <Button x:Name="Btn_Ans2" Content="Answer 2" HorizontalAlignment="Left" Margin="248,261,0,0" VerticalAlignment="Top" Height="42" Width="105" Click="Btn_Ans2_Click" />
-        <Button x:Name="Btn_Ans3" Content="Answer 3" HorizontalAlignment="Left" Margin="57,318,0,0" VerticalAlignment="Top" Height="42" Width="105" Click="Btn_Ans3_Click" />
-        <Button x:Name="Btn_Ans4" Content="Answer 4" HorizontalAlignment="Left" Margin="248,318,0,0" VerticalAlignment="Top" Height="42" Width="105" Click="Btn_Ans4_Click" />
-        <Button x:Name="Btn_ShowAns" Content="Show Answer" HorizontalAlignment="Left" Margin="32,402,0,0" VerticalAlignment="Top" Width="85" Visibility="Hidden"/>
-        <Button x:Name="Btn_Abort" Content="Abort Attempt" HorizontalAlignment="Center" Margin="0,402,0,0" VerticalAlignment="Top" Width="84"/>
-        <Button x:Name="Btn_Next" Content="Next" HorizontalAlignment="Left" Margin="296,402,0,0" VerticalAlignment="Top" Width="85" Visibility="Hidden" Click="Btn_Next_Click" />
-        
-        <Label Content="Score:" HorizontalAlignment="Left" Margin="18,22,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="Lbl_Score" Content="0" HorizontalAlignment="Left" Margin="60,22,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="Btn_Ans1" Content="Answer 1" HorizontalAlignment="Left" Margin="74,261,0,0" VerticalAlignment="Top" Height="69" Width="145" Click="Btn_Ans1_Click" />
+        <Button x:Name="Btn_Ans2" Content="Answer 2" HorizontalAlignment="Left" Margin="252,261,0,0" VerticalAlignment="Top" Height="69" Width="145" Click="Btn_Ans2_Click" />
+        <Button x:Name="Btn_Ans3" Content="Answer 3" HorizontalAlignment="Left" Margin="74,355,0,0" VerticalAlignment="Top" Height="69" Width="145" Click="Btn_Ans3_Click" />
+        <Button x:Name="Btn_Ans4" Content="Answer 4" Margin="252,355,74,0" VerticalAlignment="Top" Height="69" Click="Btn_Ans4_Click" />
+        <Button x:Name="Btn_ShowAns" Content="Show Answer" HorizontalAlignment="Left" Margin="18,478,0,0" VerticalAlignment="Top" Width="128"  />
+        <Button x:Name="Btn_Abort" Content="Abort Attempt" HorizontalAlignment="Center" Margin="0,477,0,0" VerticalAlignment="Top" Width="128" Click="Btn_Abort_Click" Height="33" Background="Red" />
+        <Button x:Name="Btn_Next" Content="Next" Margin="324,478,18,0" VerticalAlignment="Top" Click="Btn_Next_Click" />
+
+        <Label Content="Score:" HorizontalAlignment="Left" Margin="18,28,0,0" VerticalAlignment="Top" FontSize="20" />
+        <Label x:Name="Lbl_Score" Content="0" HorizontalAlignment="Left" Margin="84,28,0,0" VerticalAlignment="Top" FontSize="20" />
     </Grid>
 </Window>
