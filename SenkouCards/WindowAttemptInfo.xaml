@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
         mc:Ignorable="d" Loaded="Window_Loaded"
-        Title="WindowAttemptInfo" Height="504" Width="538">
+        Title="WindowAttemptInfo" Height="589" Width="538">
     <Grid Margin="0,0,10,0">
-        <ListView x:Name="LvResponses" Height="413" VerticalAlignment="Top" Margin="42,26,41,0" SelectionChanged="LvResponses_SelectionChanged" MouseDoubleClick="LvResponses_MouseDoubleClick" SelectionMode="Single" GridViewColumnHeader.Click="LvHeader_Click">
+        <ListView x:Name="LvResponses" Height="378" VerticalAlignment="Top" Margin="46,116,38,0" SelectionMode="Single"  GridViewColumnHeader.Click="LvHeader_Click">
             <ListView.View>
                 <GridView x:Name="GvResponses">
                     <GridViewColumn Header="Front" DisplayMemberBinding="{Binding cards.front}"></GridViewColumn>
@@ -16,7 +16,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="BtnDeckInfo" Content="Deck info" HorizontalAlignment="Left" Margin="301,452,0,0" VerticalAlignment="Top" Width="112" Click="BtnDeckInfo_Click"/>
-        <Button x:Name="BtnExportResponses" Content="Export a Deck" HorizontalAlignment="Left" Margin="112,452,0,0" VerticalAlignment="Top" Width="112" Click="BtnExportResponses_Click"/>
+        <TextBlock x:Name="TbkDeckName" HorizontalAlignment="Left" Margin="134,10,0,0" TextWrapping="Wrap" Text="Deck Name" VerticalAlignment="Top" Height="22" Width="268" TextAlignment="Center"/>
+        <TextBlock x:Name="TbkDeckDescription" HorizontalAlignment="Center" Margin="0,45,0,0" TextWrapping="Wrap" Text="Deck Description" VerticalAlignment="Top" Height="49" Width="456" TextAlignment="Center"/>
+        <Button x:Name="BtnExportResponses" Content="Export Attempt Responses" HorizontalAlignment="Left" Margin="155,515,0,0" VerticalAlignment="Top" Width="195" Click="BtnExportResponses_Click"/>
     </Grid>
 </Window>

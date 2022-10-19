@@ -48,7 +48,7 @@ namespace SenkouCards
 
             //List<responses> currentlySelectedResponses = Globals.SenkouDbAuto.responses.Where(response => response.attemptId == currentlySelectedAttempt.id).ToList();
 
-            WindowAttemptInfo newWindow = new WindowAttemptInfo(currentlySelectedAttempt.id);
+            WindowAttemptInfo newWindow = new WindowAttemptInfo(currentlySelectedAttempt);
             newWindow.ShowDialog();
             LvAttemptsHistory.SelectedItem = null;
         }
@@ -60,7 +60,7 @@ namespace SenkouCards
 
             //List<responses> currentlySelectedResponses = Globals.SenkouDbAuto.responses.Where(response => response.attemptId == currentlySelectedAttempt.id).ToList();
 
-            WindowAttemptInfo newWindow = new WindowAttemptInfo(currentlySelectedAttempt.id);
+            WindowAttemptInfo newWindow = new WindowAttemptInfo(currentlySelectedAttempt);
             newWindow.ShowDialog();
             LvAttemptsHistory.SelectedItem = null;
         }
