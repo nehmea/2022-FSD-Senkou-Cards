@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using Window = System.Windows.Window;
 
 namespace SenkouCards
@@ -13,6 +15,9 @@ namespace SenkouCards
     /// </summary>
     public partial class Decks : Window
     {
+        private GridViewColumnHeader _lastHeaderClicked = null;
+        private ListSortDirection _lastDirection = ListSortDirection.Ascending;
+
         public Decks()
         {
             InitializeComponent();
@@ -145,6 +150,41 @@ namespace SenkouCards
             BtnExportDeck.IsEnabled = (currentlySelectedDeck != null && LvDecks.SelectedItems.Count == 1);
             BtnDeckInfo.IsEnabled = (currentlySelectedDeck != null && LvDecks.SelectedItems.Count == 1);
         }
+
+        private void LvHeader_Click(object sender, RoutedEventArgs e)
+        {
+            var headerClicked = e.OriginalSource as GridViewColumnHeader; //get the clicked header by the RoutedEventArgs
+            ListSortDirection direction;
+
+            if (headerClicked != null && headerClicked.Role != GridViewColumnHeaderRole.Padding) //check if header is clicked
+            {
+                if (headerClicked != _lastHeaderClicked) //set direction to ascending if new column clicked
+                {
+                    direction = ListSortDirection.Ascending;
+                }
+                else
+                {
+                    if (_lastDirection == ListSortDirection.Ascending) // else set direction to opposite from previous click if smae column clicked
+                    {
+                        direction = ListSortDirection.Descending;
+                    }
+                    else
+                    {
+                        direction = ListSortDirection.Ascending;
+                    }
+                }
+
+                var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding; // get the binding of the clicked column
+                var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string; // get the first not null value of binding path or column header
+
+                Globals.Sort(sortBy, direction, LvDecks); //sort 
+
+
+                _lastHeaderClicked = headerClicked;
+                _lastDirection = direction;
+            }
+        }
+
 
         /*
         private void SaveToCSV()

@@ -12,11 +12,6 @@ namespace SenkouCards
             InitializeComponent();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            var cardCreation = new CardCreation();
-            cardCreation.Show();
-        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Login login = new Login();
