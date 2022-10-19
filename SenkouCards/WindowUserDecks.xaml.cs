@@ -89,17 +89,19 @@ namespace SenkouCards
         /**
          * 
          */
-        private void BtnDeckInfo_Click(object sender, RoutedEventArgs e)
+        private void BtnAttemptInfo_Click(object sender, RoutedEventArgs e)
         {
             attempts currentlySelectedAttempt = LvUserDecks.SelectedItem as attempts;
             if (currentlySelectedAttempt == null || LvUserDecks.SelectedItems.Count > 1) return;
 
             //List<responses> currentlySelectedResponses = Globals.SenkouDbAuto.responses.Where(response => response.attemptId == currentlySelectedAttempt.id).ToList();
 
-            WindowAttemptInfo newWindow = new WindowAttemptInfo(currentlySelectedAttempt.id);
+            WindowAttemptInfo newWindow = new WindowAttemptInfo(currentlySelectedAttempt);
             newWindow.ShowDialog();
             LvUserDecks.SelectedItem = null;
-            /*attempts currentlySelectedAttempt = LvUserDecks.SelectedItem as attempts;
+
+            /*
+            attempts currentlySelectedAttempt = LvUserDecks.SelectedItem as attempts;
             if (currentlySelectedAttempt == null) return;
             if (LvUserDecks.SelectedItems.Count > 1) return;
 
@@ -165,7 +167,7 @@ namespace SenkouCards
                 var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding; // get the binding of the clicked column
                 var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string; // get the first not null value of binding path or column header
 
-                Sort(sortBy, direction, LvUserDecks); //sort 
+                Globals.Sort(sortBy, direction, LvUserDecks); //sort 
 
 
                 _lastHeaderClicked = headerClicked;
@@ -173,16 +175,6 @@ namespace SenkouCards
             }
         }
 
-        private void Sort(string sortBy, ListSortDirection direction, ListView LvFoo)
-        {
-            ICollectionView dataView =
-              CollectionViewSource.GetDefaultView(LvFoo.ItemsSource);
-
-            dataView.SortDescriptions.Clear();
-            SortDescription sd = new SortDescription(sortBy, direction);
-            dataView.SortDescriptions.Add(sd);
-            dataView.Refresh();
-        }
 
         private void TbxSearchDecks_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -197,7 +189,6 @@ namespace SenkouCards
                     .Include("decks")
                     .Where(attempt => attempt.userId == Globals.ActiveUser.id && attempt.decks.name.Contains(searchString))
                     .ToList();
-
             }
 
         }

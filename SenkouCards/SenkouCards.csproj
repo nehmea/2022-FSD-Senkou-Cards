@@ -124,6 +124,9 @@
     <Compile Include="WindowAttemptInfo.xaml.cs">
       <DependentUpon>WindowAttemptInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowDeckHistory.xaml.cs">
+      <DependentUpon>WindowDeckHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowDeckInfo.xaml.cs">
       <DependentUpon>WindowDeckInfo.xaml</DependentUpon>
     </Compile>
@@ -178,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowAttemptInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowDeckHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
