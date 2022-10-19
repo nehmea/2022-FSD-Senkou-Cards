@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,24 @@ namespace SenkouCards
     public partial class CardCreation : Window
     {
         private SenkoucardsConfig dbContext;
-        public CardCreation()
+        private decks currentDeck = null;
+        public CardCreation(decks passedDeck)
         {
             InitializeComponent();
             cmbFontFamily.ItemsSource = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
             cmbFontSize.ItemsSource = new List<double>() { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 };
+            currentDeck = passedDeck;
+            try
+            {
+                dbContext = new SenkoucardsConfig();
+            }
+            catch (SystemException ex)
+            {
+                MessageBox.Show(this, "Error reading from database\n" + ex.Message, "Fatal error",
+                     MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(1);
+            }
+
         }
         private void RtbFront_SelectionChanged(object sender, RoutedEventArgs e)
         {
@@ -99,6 +113,9 @@ namespace SenkouCards
 
 
         private byte[] _audioBytes = null;
+
+        public decks CurrentDeck { get; }
+
         private void BtnUploadAudio_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -173,31 +190,43 @@ namespace SenkouCards
                 //Points
                 //Numbers only exception and validation: TODO
                 int.TryParse(TbxPoints.Text, out int points);
-                cards newCard = new cards { front = frontText, back = backText, points = points };
+                cards newCard = new cards { front = frontText, back = backText, points = points, deckId = currentDeck.id };
 
-                dbContext.cards.Add(newCard);
-                dbContext.SaveChanges();
+                try
+                {
+                    dbContext.cards.Add(newCard);
+                    cardsAudios CA;
+                    cardsImages CI;
+                    //Image
+                    if (!String.IsNullOrEmpty(TbxImagePath.Text))
+                    {
+                         CI = new cardsImages
+                        {
+                            image = _imageBytes,
+                            cards = newCard
+                        };
+                        dbContext.cardsImages.Add(CI);
 
-                //Image
-                if (!String.IsNullOrEmpty(TbxImagePath.Text))
-                {
-                    var db = new SenkoucardsConfig();
-                    var cardsImages = new cardsImages()
+                    }
+                    //Audio
+                    if (!String.IsNullOrEmpty(TbxAudioPath.Text))
                     {
-                        cardId = newCard.id,
-                        image = _imageBytes
-                    };
+                        CA = new cardsAudios
+                        {
+                            audio = _audioBytes,
+                            cards = newCard
+                        };
+                        dbContext.cardsAudios.Add(CA);
+                    }
+                    dbContext.SaveChanges();
+
                 }
-                //Audio
-                if (!String.IsNullOrEmpty(TbxAudioPath.Text))
+                catch (SystemException ex)
                 {
-                    var db = new SenkoucardsConfig();
-                    var cardsAudio = new cardsAudios()
-                    {
-                        cardId = newCard.id,
-                        audio = _audioBytes
-                    };
+                    MessageBox.Show(this, "Error reading from database:\n" + ex.Message, "Database error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+
+                
 
             }
             catch (ArgumentException ex)

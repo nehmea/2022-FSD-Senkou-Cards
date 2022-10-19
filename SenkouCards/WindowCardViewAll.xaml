@@ -5,23 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
         mc:Ignorable="d" Loaded="Window_Loaded"
-        Title="Window2" Height="585.492" Width="541.476">
+        Title="View All Cards" Height="585.492" Width="541.476">
     <Grid Margin="0,0,10,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="62*"/>
+        </Grid.ColumnDefinitions>
 
-        <ListView Name="LvCards" Height="388" VerticalAlignment="Top" Margin="10,92,10,0" SelectionChanged="LvUserCards_SelectionChanged" SelectionMode="Single" Grid.ColumnSpan="2">
+        <ListView Name="LvCards" Height="193" VerticalAlignment="Top" Margin="10,92,0,0" SelectionChanged="LvUserCards_SelectionChanged" SelectionMode="Single" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView x:Name="GvCards">
-
-                    <GridViewColumn Header="Card ID" Width="300"></GridViewColumn>
-                    <GridViewColumn Header="Points"></GridViewColumn>
-
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="BtnCreateCard" Content="Create a Card" HorizontalAlignment="Left" Margin="49,512,0,0" VerticalAlignment="Top" Width="123" Click="BtnCreateCard_Click"/>
-        <Label Content="Search" HorizontalAlignment="Left" Margin="49,23,0,0" VerticalAlignment="Top" Height="24" Width="43"/>
-        <TextBox Name="TbxSearchCards" HorizontalAlignment="Left" Margin="99,27,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TbxSearchCards_TextChanged" Height="25"/>
-        <Button x:Name="BtnDeleteCard" Content="Delete a Card" HorizontalAlignment="Left" Margin="345,514,0,0" VerticalAlignment="Top" Width="121" Click="BtnDeleteCard_Click"/>
 
+        <Button Name="BtnCreateCard" Content="Create a Card" HorizontalAlignment="Left" Margin="175,514,0,0" VerticalAlignment="Top" Width="123" Click="BtnCreateCard_Click" Grid.Column="1"/>
+        <Label Content="Search" HorizontalAlignment="Left" Margin="49,23,0,0" VerticalAlignment="Top" Height="24" Width="43" Grid.ColumnSpan="2"/>
+        <TextBox Name="TbxSearchCards" HorizontalAlignment="Left" Margin="20,27,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TbxSearchCards_TextChanged" Height="25" Grid.Column="1"/>
+        <Button x:Name="BtnDeleteCard" Content="Delete a Card" HorizontalAlignment="Left" Margin="303,514,0,0" VerticalAlignment="Top" Width="121" Click="BtnDeleteCard_Click" Grid.Column="1" RenderTransformOrigin="0.793,0.625"/>
+        <Label x:Name="label" Content="Deck Name:" HorizontalAlignment="Left" Margin="10,290,0,0" VerticalAlignment="Top" Width="71" Height="24"/>
+        <TextBox x:Name="TbxName" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="20,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
+        <Label x:Name="label1" Content="Description:" HorizontalAlignment="Left" Margin="10,319,0,0" VerticalAlignment="Top" Width="71" Height="24"/>
+        <TextBox x:Name="TbxDescription" Grid.Column="1" HorizontalAlignment="Left" Height="163" Margin="20,326,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="404" />
+        <Button x:Name="BtnUpdateDeckInfo" Content="Update Deck Info" HorizontalAlignment="Left" Margin="6,514,0,0" VerticalAlignment="Top" Width="153" RenderTransformOrigin="0.773,0.625" Click="BtnUpdateDeckInfo_Click" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

@@ -118,6 +118,7 @@
     <Compile Include="cardsImages.cs">
       <DependentUpon>SenkouDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Class1.cs" />
     <Compile Include="WindowCardViewAll.xaml.cs">
       <DependentUpon>WindowCardViewAll.xaml</DependentUpon>
     </Compile>
