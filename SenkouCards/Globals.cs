@@ -1,10 +1,12 @@
 ﻿using CsvHelper.Configuration;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -159,6 +161,7 @@ namespace SenkouCards
             string headerString = String.Join(",", headerList);
             return headerString;
         }
+
         public static string CreateStringFromProperties<T>(T source, List<string> excluded)
         {
             var propertiesList = typeof(T).GetProperties()
@@ -166,6 +169,25 @@ namespace SenkouCards
                 .Select(x => x.GetValue(source) ?? "").ToList();
             string propertyString = String.Join(",", propertiesList);
             return propertyString;
+        }
+
+        public static void SaveToCSV<T>(List<string> excluded, List<T> elementsList)
+        {
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                List<string> lines = new List<string>();
+                lines.Add(Globals.CreateFileHeaderFromProperties<T>(excluded));
+                foreach (T element in elementsList)
+                {
+                    string newline = Globals.CreateStringFromProperties<T>(element, excluded);
+                    //Console.WriteLine(newline);
+                    lines.Add(newline);
+                }
+                File.WriteAllLines(saveFileDialog.FileName, lines); // ex IO/Sys
+            }
         }
     }
 }
