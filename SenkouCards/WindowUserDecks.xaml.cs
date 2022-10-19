@@ -99,7 +99,9 @@ namespace SenkouCards
             WindowAttemptInfo newWindow = new WindowAttemptInfo(currentlySelectedAttempt.id);
             newWindow.ShowDialog();
             LvUserDecks.SelectedItem = null;
-            /*attempts currentlySelectedAttempt = LvUserDecks.SelectedItem as attempts;
+
+            /*
+            attempts currentlySelectedAttempt = LvUserDecks.SelectedItem as attempts;
             if (currentlySelectedAttempt == null) return;
             if (LvUserDecks.SelectedItems.Count > 1) return;
 

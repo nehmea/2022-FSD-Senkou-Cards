@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -35,14 +36,9 @@ namespace SenkouCards
             }
         }
 
-        private void BtnExportDeckAttempts_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void LvAttemptsHistory_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-
+            setButtonStatus();
         }
 
         private void LvAttemptsHistory_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -71,7 +67,23 @@ namespace SenkouCards
 
         private void BtnExportAttempts_Click(object sender, RoutedEventArgs e)
         {
+            int deckId = currentDeck.id;
 
+            List<attempts> attemptsList = Globals.SenkouDbAuto.attempts
+                .Where(attempt => attempt.deckId == deckId)
+                .ToList();
+
+            List<string> excluded = new List<string>() { "responses", "users", "decks" };
+
+            try
+            {
+                Globals.SaveToCSV<attempts>(excluded, attemptsList);
+                MessageBox.Show(this, "Export complete!", "Export Status", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex) when (ex is IOException || ex is SystemException)
+            {
+                MessageBox.Show(this, "Export failed\n" + ex.Message, "Export Status", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void setButtonStatus()
