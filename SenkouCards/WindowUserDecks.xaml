@@ -5,17 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
         mc:Ignorable="d" Loaded="Window_Loaded"
-        Title="UserDecks" Height="587.131" Width="541.131">
+        Title="UserDecks" Height="588" Width="550" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,10,0">
         <ListView Name="LvUserDecks" Height="388" VerticalAlignment="Top" Margin="49,77,34,0" SelectionChanged="LvUserDecks_SelectionChanged" MouseDoubleClick="LvUserDecks_MouseDoubleClick" SelectionMode="Single" GridViewColumnHeader.Click="LvHeader_Click">
             <ListView.View>
                 <GridView x:Name="GvDecks">
                     <GridViewColumn Header="Deck Name" DisplayMemberBinding="{Binding decks.name}"></GridViewColumn>
-                    <!--
-                    <GridViewColumn Header="Deck" Width="200"></GridViewColumn>
-                    <GridViewColumn Header="No. of Attempts" Width="100"></GridViewColumn>
-                    <GridViewColumn Header="Highest score" Width="100"></GridViewColumn>
-                    -->
                 </GridView>
             </ListView.View>
         </ListView>

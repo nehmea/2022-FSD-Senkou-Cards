@@ -37,5 +37,11 @@ namespace SenkouCards
             this.Close();
             cardViewAll.Show();
         }
+
+        private void BtnDeckHistory_Click(object sender, RoutedEventArgs e)
+        {
+            WindowDeckHistory deckHistory = new WindowDeckHistory(currentDeck);
+            deckHistory.Show();
+        }
     }
 }
