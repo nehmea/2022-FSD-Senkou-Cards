@@ -29,17 +29,17 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-			<Property Name="id" Type="int" Nullable="false" />
-			<Property Name="cardId" Type="int" Nullable="false" />
-			<Property Name="audio" Type="varbinary(max)" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cardId" Type="int" Nullable="false" />
+          <Property Name="audio" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="cardsImages">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="cardId" Type="int" Nullable="false" />
-          <Property Name="image" Type="varbinary(max)" Nullable="false" />
+          <Property Name="image" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="decks">
           <Key>
@@ -252,7 +252,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="cardId" Type="Int32" Nullable="false" />
-          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="cards" Relationship="Self.FK_cardsImages_cards" FromRole="cardsImages" ToRole="cards" />
         </EntityType>
         <EntityType Name="decks">

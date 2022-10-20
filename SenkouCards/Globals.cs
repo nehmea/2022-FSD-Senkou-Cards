@@ -203,5 +203,10 @@ namespace SenkouCards
             }
             return textRange.Text;
         }
+        /*public static byte[] convertedImage(string toConvert)
+        {
+
+        }*/
+
     }
 }
