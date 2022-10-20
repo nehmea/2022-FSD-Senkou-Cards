@@ -9,9 +9,11 @@
     <Grid HorizontalAlignment="Center" Width="470">
         <Label x:Name="Lbl_DeckName" Content="" HorizontalAlignment="Center" Margin="0,45,0,0" VerticalAlignment="Top" />
         <Label x:Name="Lbl_GeneratedSentence" HorizontalAlignment="Center" Margin="0,109,0,0" VerticalAlignment="Top" Height="119" Width="394" BorderBrush="Black" BorderThickness="1">
-            <TextBlock x:Name="TB_GeneratedSentence" TextWrapping="Wrap" Width="384" Height="109" FontSize="25"  >
-
-            </TextBlock>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="109" >
+                <TextBlock x:Name="TB_GeneratedSentence" TextWrapping="Wrap" Width="384"  FontSize="25"  >
+                
+                </TextBlock>
+            </ScrollViewer>
         </Label>
         <Button x:Name="Btn_Ans1" Content="Answer 1" HorizontalAlignment="Left" Margin="74,261,0,0" VerticalAlignment="Top" Height="69" Width="145" Click="Btn_Ans1_Click" />
         <Button x:Name="Btn_Ans2" Content="Answer 2" HorizontalAlignment="Left" Margin="252,261,0,0" VerticalAlignment="Top" Height="69" Width="145" Click="Btn_Ans2_Click" />
