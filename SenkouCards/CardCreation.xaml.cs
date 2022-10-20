@@ -234,6 +234,9 @@ namespace SenkouCards
                 MessageBox.Show(this, "Invalid info uploaded\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             ResetFields();
+            CardViewAll cardViewAll = new CardViewAll(currentDeck);
+            this.Close();
+            cardViewAll.Show();
 
 
         }
