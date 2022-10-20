@@ -131,15 +131,24 @@ namespace SenkouCards
         private void TbxSearchDecks_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchString = TbxSearchDecks.Text;
-            if (searchString == "")
+            try
             {
-                LvDecks.ItemsSource = Globals.SenkouDbAuto.decks.ToList();
-            }
-            else
-            {
-                LvDecks.ItemsSource = Globals.SenkouDbAuto.decks.Where(deck => deck.name.Contains(searchString) || deck.description.Contains(searchString)).ToList();
+                if (searchString == "")
+                {
+                    LvDecks.ItemsSource = Globals.SenkouDbAuto.decks.ToList();
+                }
+                else
+                {
+                    LvDecks.ItemsSource = Globals.SenkouDbAuto.decks.Where(deck => deck.name.Contains(searchString) || deck.description.Contains(searchString)).ToList();
 
+                }
             }
+            catch (SystemException ex)
+            {
+                MessageBox.Show(this, "Unable to access the database:\n" + ex.Message, "Fatal database error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(1);
+            }
+
         }
 
         private void setButtonsStatus()
