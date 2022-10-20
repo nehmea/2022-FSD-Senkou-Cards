@@ -191,6 +191,17 @@ namespace SenkouCards
                 File.WriteAllLines(saveFileDialog.FileName, lines); // ex IO/Sys
             }
         }
+        public static string convertedRtf(string toConvert)
+        {
 
+            FlowDocument document = new FlowDocument();
+
+            TextRange textRange = new TextRange(document.ContentStart, document.ContentEnd);
+            using (MemoryStream sm = new MemoryStream(Encoding.ASCII.GetBytes(toConvert)))
+            {
+                textRange.Load(sm, DataFormats.Rtf);
+            }
+            return textRange.Text;
+        }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 
 namespace SenkouCards
 {
@@ -17,46 +14,9 @@ namespace SenkouCards
         private decks currentDeck = null;
         public CardViewAll(decks passedDeck)
         {
-            try
-            {
-
-            }
-            catch (SystemException ex)
-            {
-                MessageBox.Show(this, "Error reading from database\n" + ex.Message, "Fatal error",
-                     MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(1);
-            }
 
             InitializeComponent();
             currentDeck = passedDeck;
-        }
-
-        private void BtnCreateCard_Click(object sender, RoutedEventArgs e)
-        {
-            CardCreation cardCreation = new CardCreation(currentDeck);
-            this.Close();
-            cardCreation.Show();
-        }
-
-        private void BtnDeleteCard_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TbxSearchCards_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void LvUserCards_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void LvUserCards_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -70,14 +30,8 @@ namespace SenkouCards
                 List<cards> cardsList = Globals.SenkouDbAuto.cards.Where(cards => cards.deckId == currentDeck.id).ToList();
                 foreach (cards c in cardsList)
                 {
-                    var document = new FlowDocument();
-
-                    var textRange = new TextRange(document.ContentStart, document.ContentEnd);
-                    using (var sm = new MemoryStream(Encoding.ASCII.GetBytes(c.front)))
-                    {
-                        textRange.Load(sm, DataFormats.Rtf);
-                    }
-                    c.front = textRange.Text;
+                    c.front = Globals.convertedRtf(c.front);
+                    c.back = Globals.convertedRtf(c.back);
                 }
                 LvCards.ItemsSource = cardsList;
 
@@ -91,6 +45,55 @@ namespace SenkouCards
             }
 
         }
+
+        private void BtnCreateCard_Click(object sender, RoutedEventArgs e)
+        {
+            CardCreation cardCreation = new CardCreation(currentDeck);
+            this.Close();
+            cardCreation.Show();
+        }
+
+        private void BtnDeleteCard_Click(object sender, RoutedEventArgs e)
+        {
+            cards currSelectedCard = LvCards.SelectedItem as cards;
+            if (currSelectedCard == null) return;
+            var result = MessageBox.Show(this, "Are you sure you want to delete this entry?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result != MessageBoxResult.Yes) return;
+            try
+            {
+                Globals.SenkouDbAuto.cards.Remove(currSelectedCard);
+                Globals.SenkouDbAuto.SaveChanges();
+                List<cards> cardsList = Globals.SenkouDbAuto.cards.Where(cards => cards.deckId == currentDeck.id).ToList();
+                /*foreach (cards c in cardsList)
+                {
+                    c.front = Globals.convertedRtf(c.front);
+                    c.back = Globals.convertedRtf(c.back);
+                }*/
+                LvCards.ItemsSource = cardsList;
+
+            }
+            catch (SystemException ex)
+            {
+                MessageBox.Show(this, "Error reading from database:\n" + ex.Message, "Database error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void TbxSearchCards_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void LvUserCards_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BtnDeleteCard.IsEnabled = LvCards.SelectedItem != null;
+        }
+
+        private void LvUserCards_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+
 
         private void BtnUpdateDeckInfo_Click(object sender, RoutedEventArgs e)
         {
