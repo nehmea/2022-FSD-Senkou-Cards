@@ -69,7 +69,8 @@ namespace SenkouCards
          */
         private void BtnCreateDeck_Click(object sender, RoutedEventArgs e)
         {
-
+            WindowCreateDeck wcd = new WindowCreateDeck(this);
+            wcd.ShowDialog();
         }
 
         /**
