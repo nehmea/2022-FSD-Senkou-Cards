@@ -178,19 +178,26 @@ namespace SenkouCards
 
         private void TbxSearchDecks_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchString = TbxSearchDecks.Text;
-            if (searchString == "")
+            try
             {
-                LvUserDecks.ItemsSource = Globals.SenkouDbAuto.attempts.Where(attempt => attempt.userId == Globals.ActiveUser.id).ToList();
+                string searchString = TbxSearchDecks.Text;
+                if (searchString == "")
+                {
+                    LvUserDecks.ItemsSource = Globals.SenkouDbAuto.attempts.Where(attempt => attempt.userId == Globals.ActiveUser.id).ToList();
+                }
+                else
+                {
+                    LvUserDecks.ItemsSource = Globals.SenkouDbAuto.attempts
+                        .Include("decks")
+                        .Where(attempt => attempt.userId == Globals.ActiveUser.id && attempt.decks.name.Contains(searchString))
+                        .ToList();
+                }
             }
-            else
+            catch (SystemException ex)
             {
-                LvUserDecks.ItemsSource = Globals.SenkouDbAuto.attempts
-                    .Include("decks")
-                    .Where(attempt => attempt.userId == Globals.ActiveUser.id && attempt.decks.name.Contains(searchString))
-                    .ToList();
+                MessageBox.Show(this, "Unable to access the database:\n" + ex.Message, "Fatal database error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(1);
             }
-
         }
         private void setButtonsStatus()
         {
