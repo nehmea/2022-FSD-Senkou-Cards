@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\caela\Documents\2022-FSD04-DotNet-main\2022-FSD-AppDev1-project\SenkouCards\SenkouDbContext.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Rami\Desktop\John Abbott\Web Applications 1\SenkouCards_Project\SenkouCards\SenkouDbContext.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

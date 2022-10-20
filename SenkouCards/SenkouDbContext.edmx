@@ -29,9 +29,9 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="cardId" Type="int" Nullable="false" />
-          <Property Name="audio" Type="varbinary(max)" />
+			<Property Name="id" Type="int" Nullable="false" />
+			<Property Name="cardId" Type="int" Nullable="false" />
+			<Property Name="audio" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="cardsImages">
           <Key>

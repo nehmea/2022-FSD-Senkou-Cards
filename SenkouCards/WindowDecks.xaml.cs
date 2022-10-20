@@ -21,6 +21,8 @@ namespace SenkouCards
         public Decks()
         {
             InitializeComponent();
+            Login login = new Login();
+            login.ShowDialog();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
