@@ -50,7 +50,7 @@ namespace SenkouCards
         {
             //test code, delete later
             //MessageBox.Show(Globals.ActiveUser.username, "Username", MessageBoxButton.OK);
-            this.DialogResult = false;
+            //this.DialogResult = false;
             Register register = new Register(this);//passing the login window object to make display registration success message from registration dialogue
             register.ShowDialog();
         }
@@ -60,7 +60,7 @@ namespace SenkouCards
             if(!loggedIn)
             {
                 e.Cancel = true;
-                Environment.Exit(0);
+               Environment.Exit(0); //exits the whole app
             }    
             
         }
