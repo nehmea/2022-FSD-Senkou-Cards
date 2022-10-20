@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
         mc:Ignorable="d" Loaded="Window_Loaded"
-        Title="Decks" Height="570" Width="554">
+        Title="Decks" Height="570" Width="554" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,10,0">
         <ListView Name="LvDecks" Height="388" VerticalAlignment="Top" Margin="44,92,39,0" SelectionChanged="LvUserDecks_SelectionChanged" MouseDoubleClick="LvUserDecks_MouseDoubleClick" SelectionMode="Extended" GridViewColumnHeader.Click="LvHeader_Click">
             <ListView.View>
