@@ -28,6 +28,8 @@ namespace SenkouCards
 
                 //LvAttemptsHistory.ItemsSource = Globals.SenkouDbAuto.attempts.Where(attempt => attempt.userId == Globals.ActiveUser.id && attempt.deckId == currentDeck.id).ToList();
                 LvAttemptsHistory.ItemsSource = currentDeck.attempts.ToList();
+                TbkDeckName.Text = currentDeck.name;
+                TbkDeckDescription.Text = currentDeck.description;
             }
             catch (SystemException ex)
             {

@@ -102,7 +102,7 @@ namespace SenkouCards
         }
 
         /**
-         * A function that sorts the current view by clicking on clumn header
+         * A function that sorts the current view by clicking on column header
          * */
         public static void LvHeader_Click(object sender, RoutedEventArgs e, GridViewColumnHeader _lastHeaderClicked, ListSortDirection _lastDirection, ListView LvFOO)
         {
@@ -135,6 +135,9 @@ namespace SenkouCards
             }
         }
 
+        /**
+         * A function that sorts a Listview (LvFOO) by a specific direction based on a specific column (string)
+         * */
         public static void Sort(string sortBy, ListSortDirection direction, ListView LvFOO)
         {
             ICollectionView dataView = CollectionViewSource.GetDefaultView(LvFOO.ItemsSource);
@@ -145,6 +148,9 @@ namespace SenkouCards
             dataView.Refresh();
         }
 
+        /**
+         * Mapping class to CSV columns
+         * */
         public sealed class CardsMap : ClassMap<cards>
         {
             public CardsMap()
@@ -155,24 +161,35 @@ namespace SenkouCards
             }
         }
 
-        public static string CreateFileHeaderFromProperties<T>(List<string> excluded)
+        /**
+         * Creates a file header with a specific delimiter for any class type, and excluding given list of properties
+         * */
+        public static string CreateFileHeaderFromProperties<T>(List<string> excluded, string delimiter = ",")
         {
             var headerList = typeof(T).GetProperties()
                 .Where(x => (!excluded.Contains(x.Name)))
                 .Select(x => x.Name).ToList();
-            string headerString = String.Join(",", headerList);
+            string headerString = String.Join(delimiter, headerList);
             return headerString;
         }
 
-        public static string CreateStringFromProperties<T>(T source, List<string> excluded)
+        /**
+         * Creates a delimiter-separated string of propertiers from any object, and excluding given list of properties
+         * */
+        public static string CreateStringFromProperties<T>(T source, List<string> excluded, string delimiter = ",")
         {
             var propertiesList = typeof(T).GetProperties()
                 .Where(x => (!excluded.Contains(x.Name)))
                 .Select(x => x.GetValue(source) ?? "").ToList();
-            string propertyString = String.Join(",", propertiesList);
+            string propertyString = String.Join(delimiter, propertiesList);
             return propertyString;
         }
 
+        /**
+         * Writes a list of objects into a file
+         * Takes a list of elements (objects) to be written and a list of properties to be excluded from the writing
+         * 
+         * */
         public static void SaveToCSV<T>(List<string> excluded, List<T> elementsList)
         {
 
@@ -181,16 +198,17 @@ namespace SenkouCards
             if (saveFileDialog.ShowDialog() == true)
             {
                 List<string> lines = new List<string>();
-                lines.Add(Globals.CreateFileHeaderFromProperties<T>(excluded));
+                lines.Add(Globals.CreateFileHeaderFromProperties<T>(excluded, ";"));
                 foreach (T element in elementsList)
                 {
-                    string newline = Globals.CreateStringFromProperties<T>(element, excluded);
+                    string newline = Globals.CreateStringFromProperties<T>(element, excluded, ";");
                     //Console.WriteLine(newline);
                     lines.Add(newline);
                 }
                 File.WriteAllLines(saveFileDialog.FileName, lines); // ex IO/Sys
             }
         }
+
         public static string convertedRtf(string toConvert)
         {
 
@@ -203,5 +221,10 @@ namespace SenkouCards
             }
             return textRange.Text;
         }
+        /*public static byte[] convertedImage(string toConvert)
+        {
+
+        }*/
+
     }
 }

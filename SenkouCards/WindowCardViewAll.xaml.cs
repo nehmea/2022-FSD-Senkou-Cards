@@ -55,22 +55,37 @@ namespace SenkouCards
 
         private void BtnDeleteCard_Click(object sender, RoutedEventArgs e)
         {
+
             cards currSelectedCard = LvCards.SelectedItem as cards;
             if (currSelectedCard == null) return;
             var result = MessageBox.Show(this, "Are you sure you want to delete this entry?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result != MessageBoxResult.Yes) return;
             try
             {
+                //remove cardImage
+                List<cardsImages> cardsImagesList = Globals.SenkouDbAuto.cardsImages.Where(cardsImages => cardsImages.cardId == currSelectedCard.id).ToList();
+                foreach (cardsImages ci in cardsImagesList)
+                {
+                    Globals.SenkouDbAuto.cardsImages.Remove(ci);
+                }
+
+                //remove cardAudio
+                List<cardsAudios> cardsAudiosList = Globals.SenkouDbAuto.cardsAudios.Where(cardsAudios => cardsAudios.cardId == currSelectedCard.id).ToList();
+                foreach (cardsAudios ca in cardsAudiosList)
+                {
+                    Globals.SenkouDbAuto.cardsAudios.Remove(ca);
+                }
+
+                //remove card
                 Globals.SenkouDbAuto.cards.Remove(currSelectedCard);
                 Globals.SenkouDbAuto.SaveChanges();
                 List<cards> cardsList = Globals.SenkouDbAuto.cards.Where(cards => cards.deckId == currentDeck.id).ToList();
-                /*foreach (cards c in cardsList)
+                foreach (cards c in cardsList)
                 {
                     c.front = Globals.convertedRtf(c.front);
                     c.back = Globals.convertedRtf(c.back);
-                }*/
+                }
                 LvCards.ItemsSource = cardsList;
-
             }
             catch (SystemException ex)
             {
