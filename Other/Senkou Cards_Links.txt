@@ -1,0 +1,4 @@
+Team members: Ali Nehme, Caelan Gabriel Seto, Rami Chaouki
+Project title: Senkou Cards
+Git repository: https://github.com/nehmea/2022-FSD-Senkou-Cards
+Trello link: https://trello.com/b/TYFMERbf/appdev1-project
