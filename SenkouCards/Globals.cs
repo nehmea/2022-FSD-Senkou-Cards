@@ -198,10 +198,10 @@ namespace SenkouCards
             if (saveFileDialog.ShowDialog() == true)
             {
                 List<string> lines = new List<string>();
-                lines.Add(Globals.CreateFileHeaderFromProperties<T>(excluded, ";"));
+                lines.Add(Globals.CreateFileHeaderFromProperties<T>(excluded));
                 foreach (T element in elementsList)
                 {
-                    string newline = Globals.CreateStringFromProperties<T>(element, excluded, ";");
+                    string newline = Globals.CreateStringFromProperties<T>(element, excluded);
                     //Console.WriteLine(newline);
                     lines.Add(newline);
                 }
