@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
         mc:Ignorable="d" Loaded="Window_Loaded"
-        Title="WindowAttemptInfo" Height="616" Width="538" WindowStartupLocation="CenterScreen">
+        Title="WindowAttemptInfo" Height="616" Width="943" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,10,0">
         <ListView x:Name="LvResponses" Height="378" VerticalAlignment="Top" Margin="46,116,38,0" SelectionMode="Single"  GridViewColumnHeader.Click="LvHeader_Click">
             <ListView.View>
