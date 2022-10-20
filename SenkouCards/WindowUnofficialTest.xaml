@@ -1,0 +1,30 @@
+﻿<Window x:Class="SenkouCards.WindowUnofficialTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SenkouCards"
+        mc:Ignorable="d"
+        Title="WindowUnofficialTest" Height="602" Width="470">
+    <Grid Margin="0,100,0,0">
+        <TabControl Margin="40,0,40,106">
+            <TabItem Header="Front">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock x:Name="Tbl_FrontCard" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="168" Width="370" TextAlignment="Center" Margin="0,154,0,0" FontSize="25"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Back">
+                <Grid Background="#FFE5E5E5">
+                <TextBlock x:Name="Tbl_BackCard" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="168" Width="370" TextAlignment="Center" Margin="0,154,0,0" FontSize="25"/>
+                    <Image HorizontalAlignment="Left" Height="100" Margin="26,10,0,0" VerticalAlignment="Top" Width="100"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="Btn_Next" Content="Next >>" HorizontalAlignment="Left" Margin="368,432,0,0" VerticalAlignment="Top"/>
+        <Button Content="Correct" HorizontalAlignment="Left" Margin="100,385,0,0" VerticalAlignment="Top" Width="100" Background="LimeGreen"/>
+        <Button Content="Incorrect" Margin="270,385,100,0" VerticalAlignment="Top" Background="Red"/>
+        <Label Content="Score:" HorizontalAlignment="Left" Margin="38,-58,0,0" VerticalAlignment="Top" FontSize="25"/>
+        <Label x:Name="Lbl_Score" Content="0" HorizontalAlignment="Left" Margin="129,-58,0,0" VerticalAlignment="Top" FontSize="25"/>
+
+    </Grid>
+</Window>

@@ -35,7 +35,10 @@ namespace SenkouCards
         
         public WindowOfficialTestEn(decks passedDeck)
         {
-            currentDeck = passedDeck;
+            SenkoucardsConfig Sc = new SenkoucardsConfig();
+            int passedDeckId = passedDeck.id;
+
+            currentDeck = (from d in Sc.decks where d.id == passedDeckId select d).FirstOrDefault<decks>();
             InitializeComponent();
         }
 
@@ -111,7 +114,7 @@ namespace SenkouCards
             {
                 try
                 {
-                    string currWord = currentCard.front.ToLower();
+                    string currWord =Globals.convertedRtf(currentCard.front).ToLower().Replace("\r", "").Replace("\n", "");
 
                     string uri = "https://od-api.oxforddictionaries.com/api/v2/sentences/en-us/" + currWord;
 
@@ -164,7 +167,10 @@ namespace SenkouCards
             Random rand = new Random();
             int answerIndex =rand.Next(4);
 
-            string answerString = currentCard.front;
+            
+
+            string answerString = Globals.convertedRtf(currentCard.front).Replace("\r","").Replace("\n","");
+            
             string wrongAnswer;
             string wrongAnswersUsed = "";
 
@@ -184,7 +190,7 @@ namespace SenkouCards
                 {
                     do
                     {
-                        wrongAnswer = dictionary[rand.Next(numOfWords)].front;
+                        wrongAnswer = Globals.convertedRtf(dictionary[rand.Next(numOfWords)].front).Replace("\r", "").Replace("\n", "");
                         
                     } while (wrongAnswer == answerString || wrongAnswersUsed.Contains(wrongAnswer));
                     wrongAnswersUsed += wrongAnswer;//ensures that no two buttons have the same wrong answer

@@ -166,6 +166,9 @@
     <Compile Include="WindowOfficialTestEn.xaml.cs">
       <DependentUpon>WindowOfficialTestEn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowUnofficialTest.xaml.cs">
+      <DependentUpon>WindowUnofficialTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowUserDecks.xaml.cs">
       <DependentUpon>WindowUserDecks.xaml</DependentUpon>
     </Compile>
@@ -221,6 +224,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowOfficialTestEn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowUnofficialTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
