@@ -13,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Media.Imaging;
 
 namespace SenkouCards
 {
@@ -221,10 +222,16 @@ namespace SenkouCards
             }
             return textRange.Text;
         }
-        /*public static byte[] convertedImage(string toConvert)
+        
+        public BitmapImage ConvertByteArrayToBitMapImage(byte[] imageByteArray)
         {
-
-        }*/
+            BitmapImage img = new BitmapImage();
+            using (MemoryStream memStream = new MemoryStream(imageByteArray))
+            {
+                img.StreamSource = memStream;
+            }
+            return img;
+        }
 
     }
 }

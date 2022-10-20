@@ -90,7 +90,7 @@ namespace SenkouCards
             if (currentlySelectedDeck == null) return;
             if (LvDecks.SelectedItems.Count > 1) return;
 
-            DeckInfo newWindow = new DeckInfo(currentlySelectedDeck);
+            DeckInfo newWindow = new DeckInfo(currentlySelectedDeck, this);
             newWindow.ShowDialog();
         }
 

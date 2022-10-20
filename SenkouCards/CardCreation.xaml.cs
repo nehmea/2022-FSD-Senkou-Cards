@@ -61,8 +61,10 @@ namespace SenkouCards
             if (dlg.ShowDialog() == true)
             {
                 FileStream fileStream = new FileStream(dlg.FileName, FileMode.Open);
-                TextRange range = new TextRange(RtbFront.Document.ContentStart, RtbFront.Document.ContentEnd);
-                range.Load(fileStream, DataFormats.Rtf);
+                TextRange rangeFront = new TextRange(RtbFront.Document.ContentStart, RtbFront.Document.ContentEnd);
+                rangeFront.Load(fileStream, DataFormats.Rtf);
+                TextRange rangeBack = new TextRange(RtbBack.Document.ContentStart, RtbBack.Document.ContentEnd);
+                rangeBack.Load(fileStream, DataFormats.Rtf);
             }
         }
 
@@ -76,8 +78,10 @@ namespace SenkouCards
             if (dlg.ShowDialog() == true)
             {
                 FileStream fileStream = new FileStream(dlg.FileName, FileMode.Create);
-                TextRange range = new TextRange(RtbFront.Document.ContentStart, RtbFront.Document.ContentEnd);
-                range.Save(fileStream, DataFormats.Rtf);
+                TextRange rangeFront = new TextRange(RtbFront.Document.ContentStart, RtbFront.Document.ContentEnd);
+                rangeFront.Save(fileStream, DataFormats.Rtf);
+                TextRange rangeBack = new TextRange(RtbBack.Document.ContentStart, RtbBack.Document.ContentEnd);
+                rangeBack.Save(fileStream, DataFormats.Rtf);
             }
         }
         private byte[] _imageBytes = null;

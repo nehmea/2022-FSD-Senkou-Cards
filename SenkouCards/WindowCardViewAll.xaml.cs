@@ -11,18 +11,23 @@ namespace SenkouCards
     /// </summary>
     public partial class CardViewAll : Window
     {
+        Decks allDecks;
+
         private decks currentDeck = null;
-        public CardViewAll(decks passedDeck)
+        public CardViewAll(decks passedDeck, Decks decksFromLoaded=null)
         {
 
             InitializeComponent();
             currentDeck = passedDeck;
+            allDecks = decksFromLoaded;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
+
+                //ListView
                 List<string> excluded = new List<string>() { "responses", "cardsImages", "cardsAudios", "decks", "deckId" };
                 Globals.AddListViewColumns<cards>(GvCards, excluded);
 
@@ -35,8 +40,9 @@ namespace SenkouCards
                 }
                 LvCards.ItemsSource = cardsList;
 
-
-
+                //Deck Info
+                TbxName.Text = currentDeck.name;
+                TbxDescription.Text = currentDeck.description;
             }
             catch (SystemException ex)
             {
@@ -118,6 +124,7 @@ namespace SenkouCards
                 currentDeck.name = TbxName.Text;                    // ArgumentException
                 currentDeck.description = TbxDescription.Text;
                 Globals.SenkouDbAuto.SaveChanges();
+                allDecks.LvDecks.ItemsSource = Globals.SenkouDbAuto.decks.ToList();
             }
             catch (ArgumentException ex)
             {
