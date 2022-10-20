@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
         mc:Ignorable="d" Loaded="Window_Loaded"
-        Title="DeckHistory" Height="588" Width="550" WindowStartupLocation="CenterScreen">
+        Title="DeckHistory" Height="611" Width="550" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,10,0">
         <ListView Name="LvAttemptsHistory" Height="357" VerticalAlignment="Top" Margin="42,150,42,0" SelectionChanged="LvAttemptsHistory_SelectionChanged" MouseDoubleClick="LvAttemptsHistory_MouseDoubleClick" SelectionMode="Single">
             <ListView.View>
