@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SenkouCards"
         mc:Ignorable="d" Loaded="Window_Loaded"
-        Title="View All Cards" Height="585.492" Width="541.476">
+        Title="View All Cards" Height="585.492" Width="541.476" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,10,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="13*"/>
